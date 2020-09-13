@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>1. 防抖和节流概念 | 前端时光屋</title>
+    <meta name="description" content="梁书豪的博客">
+    <meta name="generator" content="VuePress 1.3.0">
+    <link rel="icon" href="/assets/img/head.jpg">
+    
+    <link rel="preload" href="/assets/css/0.styles.83ce72a3.css" as="style"><link rel="preload" href="/assets/js/app.06b24de5.js" as="script"><link rel="preload" href="/assets/js/2.a05443f6.js" as="script"><link rel="preload" href="/assets/js/17.6a721f97.js" as="script"><link rel="prefetch" href="/assets/js/10.a5eaa95a.js"><link rel="prefetch" href="/assets/js/11.06e35382.js"><link rel="prefetch" href="/assets/js/12.140f4db6.js"><link rel="prefetch" href="/assets/js/13.f2fcf962.js"><link rel="prefetch" href="/assets/js/14.e39a2df6.js"><link rel="prefetch" href="/assets/js/15.b07ecf86.js"><link rel="prefetch" href="/assets/js/16.949e4dac.js"><link rel="prefetch" href="/assets/js/18.1b363edf.js"><link rel="prefetch" href="/assets/js/19.900530d5.js"><link rel="prefetch" href="/assets/js/20.e9f183ae.js"><link rel="prefetch" href="/assets/js/21.6c08f73f.js"><link rel="prefetch" href="/assets/js/22.c37ad609.js"><link rel="prefetch" href="/assets/js/23.759a99ff.js"><link rel="prefetch" href="/assets/js/24.c8f3fa94.js"><link rel="prefetch" href="/assets/js/25.b58c3ab8.js"><link rel="prefetch" href="/assets/js/26.ba5e0c3b.js"><link rel="prefetch" href="/assets/js/27.ad23a71d.js"><link rel="prefetch" href="/assets/js/28.a74c53ca.js"><link rel="prefetch" href="/assets/js/29.30ef0dde.js"><link rel="prefetch" href="/assets/js/3.a21791ca.js"><link rel="prefetch" href="/assets/js/30.1e9ebdb5.js"><link rel="prefetch" href="/assets/js/31.30b7a1e3.js"><link rel="prefetch" href="/assets/js/32.9f1ded02.js"><link rel="prefetch" href="/assets/js/33.61ac7552.js"><link rel="prefetch" href="/assets/js/34.f040c739.js"><link rel="prefetch" href="/assets/js/35.2c5d08d5.js"><link rel="prefetch" href="/assets/js/36.257c41df.js"><link rel="prefetch" href="/assets/js/37.40a1bbc2.js"><link rel="prefetch" href="/assets/js/38.5415ab64.js"><link rel="prefetch" href="/assets/js/39.90b605f0.js"><link rel="prefetch" href="/assets/js/4.21591d40.js"><link rel="prefetch" href="/assets/js/40.5e9ae863.js"><link rel="prefetch" href="/assets/js/41.884155d7.js"><link rel="prefetch" href="/assets/js/42.1ec6dd60.js"><link rel="prefetch" href="/assets/js/43.47cf7283.js"><link rel="prefetch" href="/assets/js/44.7af49fad.js"><link rel="prefetch" href="/assets/js/45.6088e1a9.js"><link rel="prefetch" href="/assets/js/46.fd004b63.js"><link rel="prefetch" href="/assets/js/47.044fc351.js"><link rel="prefetch" href="/assets/js/48.55a5f3fb.js"><link rel="prefetch" href="/assets/js/49.e103d7ad.js"><link rel="prefetch" href="/assets/js/5.db726197.js"><link rel="prefetch" href="/assets/js/50.f945ce05.js"><link rel="prefetch" href="/assets/js/51.316d410a.js"><link rel="prefetch" href="/assets/js/52.92a10b4a.js"><link rel="prefetch" href="/assets/js/53.e7534ba4.js"><link rel="prefetch" href="/assets/js/54.6b19fef9.js"><link rel="prefetch" href="/assets/js/55.e3fc3b29.js"><link rel="prefetch" href="/assets/js/56.0e152b3e.js"><link rel="prefetch" href="/assets/js/57.13187b13.js"><link rel="prefetch" href="/assets/js/58.d9bda000.js"><link rel="prefetch" href="/assets/js/59.da580bc1.js"><link rel="prefetch" href="/assets/js/6.ecb72c20.js"><link rel="prefetch" href="/assets/js/60.285d6cbd.js"><link rel="prefetch" href="/assets/js/61.2cdcce13.js"><link rel="prefetch" href="/assets/js/62.cf643bd2.js"><link rel="prefetch" href="/assets/js/63.137e165f.js"><link rel="prefetch" href="/assets/js/64.ce851e8d.js"><link rel="prefetch" href="/assets/js/65.8e7d5299.js"><link rel="prefetch" href="/assets/js/66.4369c90e.js"><link rel="prefetch" href="/assets/js/67.c769b698.js"><link rel="prefetch" href="/assets/js/68.bf74184c.js"><link rel="prefetch" href="/assets/js/69.17c602b3.js"><link rel="prefetch" href="/assets/js/7.6cbb1600.js"><link rel="prefetch" href="/assets/js/70.55df3357.js"><link rel="prefetch" href="/assets/js/71.4fccac4a.js"><link rel="prefetch" href="/assets/js/72.d4eeaf2a.js"><link rel="prefetch" href="/assets/js/73.30f9528a.js"><link rel="prefetch" href="/assets/js/74.4e91b153.js"><link rel="prefetch" href="/assets/js/75.cbd8b825.js"><link rel="prefetch" href="/assets/js/76.72f7b4b9.js"><link rel="prefetch" href="/assets/js/77.a30e1989.js"><link rel="prefetch" href="/assets/js/78.3c4b8b32.js"><link rel="prefetch" href="/assets/js/79.0897d95d.js"><link rel="prefetch" href="/assets/js/8.36911a7c.js"><link rel="prefetch" href="/assets/js/80.43c8044b.js"><link rel="prefetch" href="/assets/js/81.89c13b3c.js"><link rel="prefetch" href="/assets/js/82.df5cf081.js"><link rel="prefetch" href="/assets/js/83.885deed2.js"><link rel="prefetch" href="/assets/js/84.4ed1e2fa.js"><link rel="prefetch" href="/assets/js/85.8bade5eb.js"><link rel="prefetch" href="/assets/js/86.d39c8dda.js"><link rel="prefetch" href="/assets/js/87.15d43505.js"><link rel="prefetch" href="/assets/js/88.ee14fb59.js"><link rel="prefetch" href="/assets/js/89.c5ea7888.js"><link rel="prefetch" href="/assets/js/9.6d6cea10.js"><link rel="prefetch" href="/assets/js/90.2e83c22b.js"><link rel="prefetch" href="/assets/js/91.972a9ec4.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.83ce72a3.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">前端时光屋</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  主页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="JavaScript" class="dropdown-title"><span class="title">JavaScript</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/JavaScript/basics/" class="nav-link">
+  基础
+</a></li><li class="dropdown-item"><!----> <a href="/JavaScript/advance/" class="nav-link">
+  进阶
+</a></li></ul></div></div><div class="nav-item"><a href="/Vue/base/" class="nav-link">
+  Vue
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="React" class="dropdown-title"><span class="title">React</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/React/basics/" class="nav-link">
+  用法
+</a></li><li class="dropdown-item"><!----> <a href="/React/advance/" class="nav-link">
+  原理
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Node" class="dropdown-title"><span class="title">Node</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/Node/basics/" class="nav-link">
+  用法
+</a></li><li class="dropdown-item"><!----> <a href="/Node/advance/" class="nav-link">
+  原理
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Webpack" class="dropdown-title"><span class="title">Webpack</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/Webpack/basics/" class="nav-link">
+  用法
+</a></li><li class="dropdown-item"><!----> <a href="/Webpack/advance/" class="nav-link">
+  原理
+</a></li></ul></div></div><div class="nav-item"><a href="/Performance/" class="nav-link">
+  性能相关
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="面试相关" class="dropdown-title"><span class="title">面试相关</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/Interview/js/" class="nav-link router-link-active">
+  js
+</a></li><li class="dropdown-item"><!----> <a href="/Interview/vue/" class="nav-link">
+  vue
+</a></li><li class="dropdown-item"><!----> <a href="/Interview/react/" class="nav-link">
+  react
+</a></li><li class="dropdown-item"><!----> <a href="/Interview/webpack/" class="nav-link">
+  webpack
+</a></li><li class="dropdown-item"><!----> <a href="/Interview/http/" class="nav-link">
+  http
+</a></li></ul></div></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  主页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="JavaScript" class="dropdown-title"><span class="title">JavaScript</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/JavaScript/basics/" class="nav-link">
+  基础
+</a></li><li class="dropdown-item"><!----> <a href="/JavaScript/advance/" class="nav-link">
+  进阶
+</a></li></ul></div></div><div class="nav-item"><a href="/Vue/base/" class="nav-link">
+  Vue
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="React" class="dropdown-title"><span class="title">React</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/React/basics/" class="nav-link">
+  用法
+</a></li><li class="dropdown-item"><!----> <a href="/React/advance/" class="nav-link">
+  原理
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Node" class="dropdown-title"><span class="title">Node</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/Node/basics/" class="nav-link">
+  用法
+</a></li><li class="dropdown-item"><!----> <a href="/Node/advance/" class="nav-link">
+  原理
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Webpack" class="dropdown-title"><span class="title">Webpack</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/Webpack/basics/" class="nav-link">
+  用法
+</a></li><li class="dropdown-item"><!----> <a href="/Webpack/advance/" class="nav-link">
+  原理
+</a></li></ul></div></div><div class="nav-item"><a href="/Performance/" class="nav-link">
+  性能相关
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="面试相关" class="dropdown-title"><span class="title">面试相关</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/Interview/js/" class="nav-link router-link-active">
+  js
+</a></li><li class="dropdown-item"><!----> <a href="/Interview/vue/" class="nav-link">
+  vue
+</a></li><li class="dropdown-item"><!----> <a href="/Interview/react/" class="nav-link">
+  react
+</a></li><li class="dropdown-item"><!----> <a href="/Interview/webpack/" class="nav-link">
+  webpack
+</a></li><li class="dropdown-item"><!----> <a href="/Interview/http/" class="nav-link">
+  http
+</a></li></ul></div></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>面试官系列之js</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/Interview/js/000：面试题总结.html" class="sidebar-link">000：面试题总结</a></li><li><a href="/Interview/js/001：防抖和节流的应用和实现.html" class="active sidebar-link">001：防抖和节流的应用和实现</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/Interview/js/001：防抖和节流的应用和实现.html#_1-防抖和节流概念" class="sidebar-link">1. 防抖和节流概念</a></li><li class="sidebar-sub-header"><a href="/Interview/js/001：防抖和节流的应用和实现.html#_2-防抖和节流应用场景" class="sidebar-link">2. 防抖和节流应用场景</a></li><li class="sidebar-sub-header"><a href="/Interview/js/001：防抖和节流的应用和实现.html#_3-防抖的实现过程" class="sidebar-link">3. 防抖的实现过程</a></li><li class="sidebar-sub-header"><a href="/Interview/js/001：防抖和节流的应用和实现.html#_4-节流的实现过程" class="sidebar-link">4. 节流的实现过程</a></li></ul></li><li><a href="/Interview/js/002：call、apply、bind的实现.html" class="sidebar-link">002：call、apply、bind的实现</a></li><li><a href="/Interview/js/003：发布订阅和观察者模式.html" class="sidebar-link">003：发布订阅和观察者模式</a></li><li><a href="/Interview/js/004：浏览器多进程、JS单线程，EventLoop的相爱相杀.html" class="sidebar-link">004：浏览器多进程、JS单线程，EventLoop的相爱相杀</a></li><li><a href="/Interview/js/005：检测四种方案的异同.html" class="sidebar-link">005：检测四种方案的异同</a></li><li><a href="/Interview/js/006：柯里化与反柯里化.html" class="sidebar-link">006：柯里化与反柯里化</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h2 id="_1-防抖和节流概念"><a href="#_1-防抖和节流概念" class="header-anchor">#</a> 1. 防抖和节流概念</h2> <blockquote><p><b>防抖</b>：在用户频繁触发函数的某个阶段中， <strong>只</strong> 识别一次（识别第一次/识别最后一次），如果在n秒内又触发了时间，则会重新计算函数执行时间【可以设置频繁的间隔时间】</p> <p><b>节流</b>：在用户连续触发事件，但是在n秒内只执行一次函数。只是降低了函数的 <strong>执行频率</strong></p></blockquote> <h2 id="_2-防抖和节流应用场景"><a href="#_2-防抖和节流应用场景" class="header-anchor">#</a> 2. 防抖和节流应用场景</h2> <h3 id="防抖应用场景"><a href="#防抖应用场景" class="header-anchor">#</a> 防抖应用场景</h3> <blockquote><p><b>按钮点击：</b>只执行刚开始那次，或最后的点击那次
+<b>表单验证：</b> 触发一段连续的输入事件，只取最后的输入结果</p></blockquote> <h3 id="节流应用场景"><a href="#节流应用场景" class="header-anchor">#</a> 节流应用场景</h3> <blockquote><p><b>拖拽场景：</b>固定事件内只执行一次，防止高频率触发导致位置变动
+<b>监听滚动事件：</b> 如果做图片懒加载时，限制滚动条的滚动频率
+<b>动画性能：</b> 避免短时间内多次触发动画，引起性能问题</p></blockquote> <h2 id="_3-防抖的实现过程"><a href="#_3-防抖的实现过程" class="header-anchor">#</a> 3. 防抖的实现过程</h2> <h3 id="防抖-执行流程"><a href="#防抖-执行流程" class="header-anchor">#</a> 防抖 执行流程</h3> <ul><li>第一次点击，没有立即执行，等待500ms，看看这个事件内有没有触发第二次</li> <li>有触发第二次说明在频繁点击，不去执行我们的事情（继续看第二次和第三次间隔... ）</li> <li>如果没有触发第二次，则认为非频繁点击，此时触发；</li></ul> <h3 id="以最后一次触发为标准"><a href="#以最后一次触发为标准" class="header-anchor">#</a> 以最后一次触发为标准</h3> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">/**
+ * 实现函数的防抖（目的是频繁触发中只执行一次）
+ * @param {*} func 需要执行的函数
+ * @param {*} wait 检测防抖的间隔频率
+ * @param {*} immediate 是否是立即执行  True：第一次，默认False：最后一次
+ * @return {可被调用执行的函数}
+ */</span>
+<span class="token keyword">function</span> <span class="token function">debounce</span><span class="token punctuation">(</span><span class="token parameter">func<span class="token punctuation">,</span> wati <span class="token operator">=</span> <span class="token number">500</span><span class="token punctuation">,</span> immediate <span class="token operator">=</span> <span class="token boolean">false</span></span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">let</span> timer <span class="token operator">=</span> <span class="token keyword">null</span>
+  <span class="token keyword">return</span> <span class="token keyword">function</span> <span class="token function">anonymous</span><span class="token punctuation">(</span><span class="token parameter"><span class="token operator">...</span> params</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token function">clearTimeout</span><span class="token punctuation">(</span>timer<span class="token punctuation">)</span>
+    timer <span class="token operator">=</span> <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token parameter">_</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+      <span class="token comment">// 在下一个500ms 执行func之前，将timer = null</span>
+      <span class="token comment">//（因为clearInterval只能清除定时器，但timer还有值）</span>
+      <span class="token comment">// 为了确保后续每一次执行都和最初结果一样，赋值为null</span>
+      <span class="token comment">// 也可以通过 timer 是否 为 null 是否有定时器</span>
+      timer <span class="token operator">=</span> <span class="token keyword">null</span>
+      <span class="token function">func</span><span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span> <span class="token operator">...</span>params<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span> wait<span class="token punctuation">)</span>
+
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h3 id="以第一次触发为标准"><a href="#以第一次触发为标准" class="header-anchor">#</a> 以第一次触发为标准</h3> <p>(第一次点击，立即触发，随后立马接着点击，不会触发，除非超过间隔时间，重新触发函数)</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">/**
+ * 实现函数的防抖（目的是频繁触发中只执行一次）
+ * @param {*} func 需要执行的函数
+ * @param {*} wait 检测防抖的间隔频率
+ * @param {*} immediate 是否是立即执行 True：第一次，默认False：最后一次
+ * @return {可被调用执行的函数}
+ */</span>
+<span class="token keyword">function</span> <span class="token function">debounce</span><span class="token punctuation">(</span><span class="token parameter">func<span class="token punctuation">,</span> wait <span class="token operator">=</span> <span class="token number">500</span><span class="token punctuation">,</span> immediate <span class="token operator">=</span> <span class="token boolean">true</span></span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">let</span> timer <span class="token operator">=</span> <span class="token keyword">null</span>
+  <span class="token keyword">return</span> <span class="token keyword">function</span> <span class="token function">anonymous</span><span class="token punctuation">(</span><span class="token parameter"><span class="token operator">...</span> params</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token comment">// 第一点击 没有设置过任何定时器 timer就要为 null</span>
+    <span class="token keyword">let</span> now <span class="token operator">=</span> immediate <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>timer
+    <span class="token function">clearTimeout</span><span class="token punctuation">(</span>timer<span class="token punctuation">)</span>
+    timer <span class="token operator">=</span> <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token parameter">_</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+      <span class="token comment">// 在下一个500ms 执行func之前，将timer = null</span>
+      <span class="token comment">//（因为clearInterval只能在系统内清除定时器，但timer还有值）</span>
+      <span class="token comment">// 为了确保后续每一次执行都和最初结果一样，赋值为null</span>
+      <span class="token comment">// 也可以通过 timer 是否 为 null 是否有定时器</span>
+      timer <span class="token operator">=</span> <span class="token keyword">null</span><span class="token operator">!</span>immediate <span class="token operator">?</span> <span class="token function">func</span><span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span> <span class="token operator">...</span>params<span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token keyword">null</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span> wait<span class="token punctuation">)</span>
+    now <span class="token operator">?</span> <span class="token function">func</span><span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span> <span class="token operator">...</span>params<span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token keyword">null</span>
+
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">function</span> <span class="token function">func</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span> <span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'ok'</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+btn<span class="token punctuation">.</span> onclick <span class="token operator">=</span> <span class="token function">debounce</span><span class="token punctuation">(</span>func<span class="token punctuation">,</span> <span class="token number">500</span><span class="token punctuation">)</span>
+</code></pre></div><h2 id="_4-节流的实现过程"><a href="#_4-节流的实现过程" class="header-anchor">#</a> 4. 节流的实现过程</h2> <blockquote><p>【第一次触发：<strong>reamining</strong>是负数，<strong>previous</strong>被赋值为当前时间】</p> <p>【第二次触发：假设时间间隔是500ms，第一次执行完之后，<code>20ms</code>之后，立即触发第二次，则<strong>remaining = 500 - ( 新的当前时间 - 上一次触发时间 ) = 500 - 20 = 480</strong> 】</p></blockquote> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">/**
+ * 实现函数的节流 （目的是频繁触发中缩减频率）
+ * @param {*} func 需要执行的函数
+ * @param {*} wait 检测节流的间隔频率
+ * @param {*} immediate 是否是立即执行 True：第一次，默认False：最后一次
+ * @return {可被调用执行的函数}
+ */</span>
+<span class="token keyword">function</span> <span class="token function">throttle</span><span class="token punctuation">(</span><span class="token parameter">func<span class="token punctuation">,</span> wait</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	<span class="token keyword">let</span> timer <span class="token operator">=</span> <span class="token keyword">null</span>
+  <span class="token keyword">let</span> previous <span class="token operator">=</span> <span class="token number">0</span>  <span class="token comment">// 记录上一次操作的时间点</span>
+
+  <span class="token keyword">return</span> <span class="token keyword">function</span> <span class="token function">anonymous</span><span class="token punctuation">(</span><span class="token parameter"><span class="token operator">...</span> params</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">let</span> now <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span>  <span class="token comment">// 当前操作的时间点</span>
+    remaining <span class="token operator">=</span> wait <span class="token operator">-</span> <span class="token punctuation">(</span>now <span class="token operator">-</span> previous<span class="token punctuation">)</span> <span class="token comment">// 剩下的时间</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>remaining <span class="token operator">&lt;=</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token comment">// 两次间隔时间超过频率，把方法执行</span>
+      
+      <span class="token function">clearTimeout</span><span class="token punctuation">(</span>timer<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// clearTimeout是从系统中清除定时器，但timer值不会变为null</span>
+      timer <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span> <span class="token comment">// 后续可以通过判断 timer是否为null，而判断是否有 定时器</span>
+      
+      <span class="token comment">// 此时已经执行func 函数，应该将上次触发函数的时间点 = 现在触发的时间点 new Date()</span>
+      previous <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 把上一次操作时间修改为当前时间</span>
+      <span class="token function">func</span><span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span> <span class="token operator">...</span>params<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>timer<span class="token punctuation">)</span><span class="token punctuation">{</span> 
+      
+      <span class="token comment">// 两次间隔的事件没有超过频率，说明还没有达到触发标准，设置定时器等待即可（还差多久等多久）</span>
+      <span class="token comment">// 假设事件间隔为500ms，第一次执行完之后，20ms后再次点击执行，则剩余 480ms，就能等待480ms</span>
+      timer <span class="token operator">=</span> <span class="token function">setTimeout</span><span class="token punctuation">(</span> <span class="token parameter">_</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        <span class="token function">clearTimeout</span><span class="token punctuation">(</span>timer<span class="token punctuation">)</span>
+        timer <span class="token operator">=</span> <span class="token keyword">null</span> <span class="token comment">// 确保每次执行完的时候，timer 都清 0，回到初始状态</span>
+        
+        <span class="token comment">//过了remaining时间后，才去执行func，所以previous不能等于初始时的 now</span>
+        previous <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 把上一次操作时间修改为当前时间</span>
+        <span class="token function">func</span><span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span> <span class="token operator">...</span>params<span class="token punctuation">)</span>；
+      <span class="token punctuation">}</span><span class="token punctuation">,</span> remaining<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">function</span> <span class="token function">func</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span> <span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'ok'</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+btn<span class="token punctuation">.</span> onclick <span class="token operator">=</span> <span class="token function">throttle</span><span class="token punctuation">(</span>func<span class="token punctuation">,</span> <span class="token number">500</span><span class="token punctuation">)</span>
+</code></pre></div></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/Interview/js/000：面试题总结.html" class="prev">
+        000：面试题总结
+      </a></span> <span class="next"><a href="/Interview/js/002：call、apply、bind的实现.html">
+        002：call、apply、bind的实现
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.06b24de5.js" defer></script><script src="/assets/js/2.a05443f6.js" defer></script><script src="/assets/js/17.6a721f97.js" defer></script>
+  </body>
+</html>

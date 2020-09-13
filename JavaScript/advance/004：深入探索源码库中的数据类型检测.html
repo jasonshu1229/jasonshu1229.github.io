@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>深入探索源码库中的数据类型检测 | 前端时光屋</title>
+    <meta name="description" content="梁书豪的博客">
+    <meta name="generator" content="VuePress 1.3.0">
+    <link rel="icon" href="/assets/img/head.jpg">
+    
+    <link rel="preload" href="/assets/css/0.styles.83ce72a3.css" as="style"><link rel="preload" href="/assets/js/app.06b24de5.js" as="script"><link rel="preload" href="/assets/js/2.a05443f6.js" as="script"><link rel="preload" href="/assets/js/29.30ef0dde.js" as="script"><link rel="preload" href="/assets/js/3.a21791ca.js" as="script"><link rel="prefetch" href="/assets/js/10.a5eaa95a.js"><link rel="prefetch" href="/assets/js/11.06e35382.js"><link rel="prefetch" href="/assets/js/12.140f4db6.js"><link rel="prefetch" href="/assets/js/13.f2fcf962.js"><link rel="prefetch" href="/assets/js/14.e39a2df6.js"><link rel="prefetch" href="/assets/js/15.b07ecf86.js"><link rel="prefetch" href="/assets/js/16.949e4dac.js"><link rel="prefetch" href="/assets/js/17.6a721f97.js"><link rel="prefetch" href="/assets/js/18.1b363edf.js"><link rel="prefetch" href="/assets/js/19.900530d5.js"><link rel="prefetch" href="/assets/js/20.e9f183ae.js"><link rel="prefetch" href="/assets/js/21.6c08f73f.js"><link rel="prefetch" href="/assets/js/22.c37ad609.js"><link rel="prefetch" href="/assets/js/23.759a99ff.js"><link rel="prefetch" href="/assets/js/24.c8f3fa94.js"><link rel="prefetch" href="/assets/js/25.b58c3ab8.js"><link rel="prefetch" href="/assets/js/26.ba5e0c3b.js"><link rel="prefetch" href="/assets/js/27.ad23a71d.js"><link rel="prefetch" href="/assets/js/28.a74c53ca.js"><link rel="prefetch" href="/assets/js/30.1e9ebdb5.js"><link rel="prefetch" href="/assets/js/31.30b7a1e3.js"><link rel="prefetch" href="/assets/js/32.9f1ded02.js"><link rel="prefetch" href="/assets/js/33.61ac7552.js"><link rel="prefetch" href="/assets/js/34.f040c739.js"><link rel="prefetch" href="/assets/js/35.2c5d08d5.js"><link rel="prefetch" href="/assets/js/36.257c41df.js"><link rel="prefetch" href="/assets/js/37.40a1bbc2.js"><link rel="prefetch" href="/assets/js/38.5415ab64.js"><link rel="prefetch" href="/assets/js/39.90b605f0.js"><link rel="prefetch" href="/assets/js/4.21591d40.js"><link rel="prefetch" href="/assets/js/40.5e9ae863.js"><link rel="prefetch" href="/assets/js/41.884155d7.js"><link rel="prefetch" href="/assets/js/42.1ec6dd60.js"><link rel="prefetch" href="/assets/js/43.47cf7283.js"><link rel="prefetch" href="/assets/js/44.7af49fad.js"><link rel="prefetch" href="/assets/js/45.6088e1a9.js"><link rel="prefetch" href="/assets/js/46.fd004b63.js"><link rel="prefetch" href="/assets/js/47.044fc351.js"><link rel="prefetch" href="/assets/js/48.55a5f3fb.js"><link rel="prefetch" href="/assets/js/49.e103d7ad.js"><link rel="prefetch" href="/assets/js/5.db726197.js"><link rel="prefetch" href="/assets/js/50.f945ce05.js"><link rel="prefetch" href="/assets/js/51.316d410a.js"><link rel="prefetch" href="/assets/js/52.92a10b4a.js"><link rel="prefetch" href="/assets/js/53.e7534ba4.js"><link rel="prefetch" href="/assets/js/54.6b19fef9.js"><link rel="prefetch" href="/assets/js/55.e3fc3b29.js"><link rel="prefetch" href="/assets/js/56.0e152b3e.js"><link rel="prefetch" href="/assets/js/57.13187b13.js"><link rel="prefetch" href="/assets/js/58.d9bda000.js"><link rel="prefetch" href="/assets/js/59.da580bc1.js"><link rel="prefetch" href="/assets/js/6.ecb72c20.js"><link rel="prefetch" href="/assets/js/60.285d6cbd.js"><link rel="prefetch" href="/assets/js/61.2cdcce13.js"><link rel="prefetch" href="/assets/js/62.cf643bd2.js"><link rel="prefetch" href="/assets/js/63.137e165f.js"><link rel="prefetch" href="/assets/js/64.ce851e8d.js"><link rel="prefetch" href="/assets/js/65.8e7d5299.js"><link rel="prefetch" href="/assets/js/66.4369c90e.js"><link rel="prefetch" href="/assets/js/67.c769b698.js"><link rel="prefetch" href="/assets/js/68.bf74184c.js"><link rel="prefetch" href="/assets/js/69.17c602b3.js"><link rel="prefetch" href="/assets/js/7.6cbb1600.js"><link rel="prefetch" href="/assets/js/70.55df3357.js"><link rel="prefetch" href="/assets/js/71.4fccac4a.js"><link rel="prefetch" href="/assets/js/72.d4eeaf2a.js"><link rel="prefetch" href="/assets/js/73.30f9528a.js"><link rel="prefetch" href="/assets/js/74.4e91b153.js"><link rel="prefetch" href="/assets/js/75.cbd8b825.js"><link rel="prefetch" href="/assets/js/76.72f7b4b9.js"><link rel="prefetch" href="/assets/js/77.a30e1989.js"><link rel="prefetch" href="/assets/js/78.3c4b8b32.js"><link rel="prefetch" href="/assets/js/79.0897d95d.js"><link rel="prefetch" href="/assets/js/8.36911a7c.js"><link rel="prefetch" href="/assets/js/80.43c8044b.js"><link rel="prefetch" href="/assets/js/81.89c13b3c.js"><link rel="prefetch" href="/assets/js/82.df5cf081.js"><link rel="prefetch" href="/assets/js/83.885deed2.js"><link rel="prefetch" href="/assets/js/84.4ed1e2fa.js"><link rel="prefetch" href="/assets/js/85.8bade5eb.js"><link rel="prefetch" href="/assets/js/86.d39c8dda.js"><link rel="prefetch" href="/assets/js/87.15d43505.js"><link rel="prefetch" href="/assets/js/88.ee14fb59.js"><link rel="prefetch" href="/assets/js/89.c5ea7888.js"><link rel="prefetch" href="/assets/js/9.6d6cea10.js"><link rel="prefetch" href="/assets/js/90.2e83c22b.js"><link rel="prefetch" href="/assets/js/91.972a9ec4.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.83ce72a3.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">前端时光屋</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  主页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="JavaScript" class="dropdown-title"><span class="title">JavaScript</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/JavaScript/basics/" class="nav-link">
+  基础
+</a></li><li class="dropdown-item"><!----> <a href="/JavaScript/advance/" class="nav-link router-link-active">
+  进阶
+</a></li></ul></div></div><div class="nav-item"><a href="/Vue/base/" class="nav-link">
+  Vue
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="React" class="dropdown-title"><span class="title">React</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/React/basics/" class="nav-link">
+  用法
+</a></li><li class="dropdown-item"><!----> <a href="/React/advance/" class="nav-link">
+  原理
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Node" class="dropdown-title"><span class="title">Node</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/Node/basics/" class="nav-link">
+  用法
+</a></li><li class="dropdown-item"><!----> <a href="/Node/advance/" class="nav-link">
+  原理
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Webpack" class="dropdown-title"><span class="title">Webpack</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/Webpack/basics/" class="nav-link">
+  用法
+</a></li><li class="dropdown-item"><!----> <a href="/Webpack/advance/" class="nav-link">
+  原理
+</a></li></ul></div></div><div class="nav-item"><a href="/Performance/" class="nav-link">
+  性能相关
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="面试相关" class="dropdown-title"><span class="title">面试相关</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/Interview/js/" class="nav-link">
+  js
+</a></li><li class="dropdown-item"><!----> <a href="/Interview/vue/" class="nav-link">
+  vue
+</a></li><li class="dropdown-item"><!----> <a href="/Interview/react/" class="nav-link">
+  react
+</a></li><li class="dropdown-item"><!----> <a href="/Interview/webpack/" class="nav-link">
+  webpack
+</a></li><li class="dropdown-item"><!----> <a href="/Interview/http/" class="nav-link">
+  http
+</a></li></ul></div></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  主页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="JavaScript" class="dropdown-title"><span class="title">JavaScript</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/JavaScript/basics/" class="nav-link">
+  基础
+</a></li><li class="dropdown-item"><!----> <a href="/JavaScript/advance/" class="nav-link router-link-active">
+  进阶
+</a></li></ul></div></div><div class="nav-item"><a href="/Vue/base/" class="nav-link">
+  Vue
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="React" class="dropdown-title"><span class="title">React</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/React/basics/" class="nav-link">
+  用法
+</a></li><li class="dropdown-item"><!----> <a href="/React/advance/" class="nav-link">
+  原理
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Node" class="dropdown-title"><span class="title">Node</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/Node/basics/" class="nav-link">
+  用法
+</a></li><li class="dropdown-item"><!----> <a href="/Node/advance/" class="nav-link">
+  原理
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Webpack" class="dropdown-title"><span class="title">Webpack</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/Webpack/basics/" class="nav-link">
+  用法
+</a></li><li class="dropdown-item"><!----> <a href="/Webpack/advance/" class="nav-link">
+  原理
+</a></li></ul></div></div><div class="nav-item"><a href="/Performance/" class="nav-link">
+  性能相关
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="面试相关" class="dropdown-title"><span class="title">面试相关</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/Interview/js/" class="nav-link">
+  js
+</a></li><li class="dropdown-item"><!----> <a href="/Interview/vue/" class="nav-link">
+  vue
+</a></li><li class="dropdown-item"><!----> <a href="/Interview/react/" class="nav-link">
+  react
+</a></li><li class="dropdown-item"><!----> <a href="/Interview/webpack/" class="nav-link">
+  webpack
+</a></li><li class="dropdown-item"><!----> <a href="/Interview/http/" class="nav-link">
+  http
+</a></li></ul></div></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>JS-深入数组</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/JavaScript/advance/001：JS高阶编程技巧.html" class="sidebar-link">001：JS高阶编程技巧</a></li><li><a href="/JavaScript/advance/002：Array.prototype.reduce.html" class="sidebar-link">002：Array.prototype.reduce</a></li><li><a href="/JavaScript/advance/003：尾递归调用和优化.html" class="sidebar-link">003：尾递归调用和优化</a></li></ul></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>JS-手撕系列</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/JavaScript/advance/004：深入探索源码库中的数据类型检测.html" class="active sidebar-link">004：深度剖析四种数据类型检测的区别</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/JavaScript/advance/004：深入探索源码库中的数据类型检测.html#引子" class="sidebar-link">引子</a></li><li class="sidebar-sub-header"><a href="/JavaScript/advance/004：深入探索源码库中的数据类型检测.html#jquery中提供的监测数据类型的api" class="sidebar-link">jQuery中提供的监测数据类型的api</a></li><li class="sidebar-sub-header"><a href="/JavaScript/advance/004：深入探索源码库中的数据类型检测.html#理解源码基础" class="sidebar-link">理解源码基础</a></li><li class="sidebar-sub-header"><a href="/JavaScript/advance/004：深入探索源码库中的数据类型检测.html#检测是否为函数" class="sidebar-link">检测是否为函数</a></li><li class="sidebar-sub-header"><a href="/JavaScript/advance/004：深入探索源码库中的数据类型检测.html#检测是否为window对象" class="sidebar-link">检测是否为window对象</a></li><li class="sidebar-sub-header"><a href="/JavaScript/advance/004：深入探索源码库中的数据类型检测.html#检测是否为纯粹的对象-（数组和正则等都不是纯粹的对象）" class="sidebar-link">检测是否为纯粹的对象{}（数组和正则等都不是纯粹的对象）</a></li><li class="sidebar-sub-header"><a href="/JavaScript/advance/004：深入探索源码库中的数据类型检测.html#检测是否为空对象" class="sidebar-link">检测是否为空对象</a></li><li class="sidebar-sub-header"><a href="/JavaScript/advance/004：深入探索源码库中的数据类型检测.html#检测是否为数组或者类数组" class="sidebar-link">检测是否为数组或者类数组</a></li><li class="sidebar-sub-header"><a href="/JavaScript/advance/004：深入探索源码库中的数据类型检测.html#如何判断一个对象是null还是undefined" class="sidebar-link">如何判断一个对象是null还是undefined</a></li><li class="sidebar-sub-header"><a href="/JavaScript/advance/004：深入探索源码库中的数据类型检测.html#写在最后" class="sidebar-link">写在最后</a></li></ul></li><li><a href="/JavaScript/advance/005：全面学习深浅克隆.html" class="sidebar-link">005：深度学习深浅克隆</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="深入探索源码库中的数据类型检测"><a href="#深入探索源码库中的数据类型检测" class="header-anchor">#</a> 深入探索源码库中的数据类型检测</h1> <h2 id="引子"><a href="#引子" class="header-anchor">#</a> 引子</h2> <p>JavaScript 的数据类型检测是我们平时开发中经常会遇到的场景，小到基本数据类型大至各种引用数据类型的检测，都是我们需要掌握的知识点。本章会详细讲解jQuery最新版本(3. 4. 1)中，关于数据类型检测公共方法封装的源码。</p> <h2 id="jquery中提供的监测数据类型的api"><a href="#jquery中提供的监测数据类型的api" class="header-anchor">#</a> jQuery中提供的监测数据类型的api</h2> <p>jQuery中给我们提供的一个方法  <strong>$. type()</strong></p> <div class="language-javascript extra-class"><pre class="language-javascript"><code>$<span class="token punctuation">.</span> <span class="token function">type</span><span class="token punctuation">(</span><span class="token number">12</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// =&gt; &quot;number&quot;</span>
+$<span class="token punctuation">.</span> <span class="token function">type</span><span class="token punctuation">(</span><span class="token regex">/^$/</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// =&gt; &quot;regexp&quot;</span>
+</code></pre></div><h2 id="理解源码基础"><a href="#理解源码基础" class="header-anchor">#</a> 理解源码基础</h2> <h3 id="object-prototype-hasownproperty-prop"><a href="#object-prototype-hasownproperty-prop" class="header-anchor">#</a> Object. prototype. hasOwnProperty(prop)</h3> <blockquote><p>根据MDN解释:<br></p></blockquote> <p><strong>含义</strong>:  hasOwnProperty() 方法会返回一个布尔值，指示对象自身属性中是否具有指定的属性 <br> <strong>参数</strong>： prop <br>
+要检测的属性以<strong>字符串</strong>形式<strong>String</strong>表示，或者 Symbol <br> <strong>返回值</strong>:  用来判断某个对象是否含有指定的属性, 返回值为<strong>Boolean</strong> <br> <strong>描述</strong>:  所有继承了 Object 的对象都会继承hasOwnProperty方法。这个方法可以用来检测一个对象是否含有特定的自身属性；和 in 运算符不同，该方法会<strong>忽略</strong>掉那些从<strong>原型链上继承到的属性</strong>。<br> <strong>备注</strong>:  即使属性的值是 null 或 undefined，只要属性存在，hasOwnProperty 依旧会返回 true。<br></p> <div class="language-javascript extra-class"><pre class="language-javascript"><code>o <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Object</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+o<span class="token punctuation">.</span> propOne <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span> 
+o<span class="token punctuation">.</span> <span class="token function">hasOwnProperty</span><span class="token punctuation">(</span><span class="token string">'propOne'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 返回 true</span>
+o<span class="token punctuation">.</span> propTwo <span class="token operator">=</span> <span class="token keyword">undefined</span><span class="token punctuation">;</span> 
+o<span class="token punctuation">.</span> <span class="token function">hasOwnProperty</span><span class="token punctuation">(</span><span class="token string">'propTwo'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 返回 true</span>
+</code></pre></div><p><strong>举例</strong>:  遍历一个对象的所有自身属性</p> <div class="language-javascript extra-class"><pre class="language-javascript"><code>下面的例子演示了 hasOwnProperty 方法对待自身属性和继承属性的区别
+o <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Object</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+o<span class="token punctuation">.</span> prop <span class="token operator">=</span> <span class="token string">'exists'</span><span class="token punctuation">;</span> 
+o<span class="token punctuation">.</span> <span class="token function">hasOwnProperty</span><span class="token punctuation">(</span><span class="token string">'prop'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 返回 true</span>
+o<span class="token punctuation">.</span> <span class="token function">hasOwnProperty</span><span class="token punctuation">(</span><span class="token string">'toString'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 返回 false</span>
+o<span class="token punctuation">.</span> <span class="token function">hasOwnProperty</span><span class="token punctuation">(</span><span class="token string">'hasOwnProperty'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 返回 false</span>
+</code></pre></div><h3 id="分析源码-type-的实现原理"><a href="#分析源码-type-的实现原理" class="header-anchor">#</a> 分析源码**$. type()**的实现原理</h3> <p><strong>原理</strong>: Object. prototype. toString. call()</p> <div class="language-javascript extra-class"><pre class="language-javascript"><code><span class="token keyword">var</span> class2type <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span> 
+<span class="token keyword">var</span> toString <span class="token operator">=</span> class2type<span class="token punctuation">.</span> toString<span class="token punctuation">;</span> <span class="token comment">//=&gt;Object. prototype. toString</span>
+<span class="token keyword">var</span> hasOwn <span class="token operator">=</span> class2type<span class="token punctuation">.</span> hasOwnProperty<span class="token punctuation">;</span> <span class="token comment">//=&gt;Object. prototype. hasOwnProperty</span>
+<span class="token keyword">var</span> fnToString <span class="token operator">=</span> hasOwn<span class="token punctuation">.</span> toString<span class="token punctuation">;</span> <span class="token comment">//=&gt;Function. prototype. toString</span>
+<span class="token keyword">var</span> ObjectFunctionString <span class="token operator">=</span> <span class="token function">fnToString</span><span class="token punctuation">.</span> <span class="token function">call</span><span class="token punctuation">(</span>Object<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//=&gt;Object. toString() =&gt;&quot;function Object() { [native code] }&quot;</span>
+
+<span class="token string">&quot;Boolean Number String Function Array Date RegExp Object Error Symbol&quot;</span> <span class="token punctuation">.</span> <span class="token function">split</span><span class="token punctuation">(</span><span class="token string">&quot; &quot;</span><span class="token punctuation">)</span><span class="token punctuation">.</span> <span class="token function">forEach</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token function">anonymous</span><span class="token punctuation">(</span><span class="token parameter">item</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    class2type<span class="token punctuation">[</span><span class="token string">&quot;[object &quot;</span> <span class="token operator">+</span> item <span class="token operator">+</span> <span class="token string">&quot;]&quot;</span><span class="token punctuation">]</span> <span class="token operator">=</span> item<span class="token punctuation">.</span><span class="token function">toLowerCase</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+console<span class="token punctuation">.</span> <span class="token function">log</span><span class="token punctuation">(</span>class2type<span class="token punctuation">)</span><span class="token punctuation">;</span> 
+<span class="token comment">// =&gt; </span>
+
+    <span class="token punctuation">[</span>object Boolean<span class="token punctuation">]</span><span class="token operator">:</span> <span class="token string">&quot;boolean&quot;</span>
+    <span class="token punctuation">[</span>object Number<span class="token punctuation">]</span><span class="token operator">:</span> <span class="token string">&quot;number&quot;</span>
+    <span class="token punctuation">[</span>object String<span class="token punctuation">]</span><span class="token operator">:</span> <span class="token string">&quot;string&quot;</span>
+    <span class="token punctuation">[</span>object Function<span class="token punctuation">]</span><span class="token operator">:</span> <span class="token string">&quot;function&quot;</span>
+    <span class="token punctuation">[</span>object Array<span class="token punctuation">]</span><span class="token operator">:</span> <span class="token string">&quot;array&quot;</span>
+    <span class="token punctuation">[</span>object Date<span class="token punctuation">]</span><span class="token operator">:</span> <span class="token string">&quot;date&quot;</span>
+    <span class="token punctuation">[</span>object RegExp<span class="token punctuation">]</span><span class="token operator">:</span> <span class="token string">&quot;regexp&quot;</span>
+    <span class="token punctuation">[</span>object Object<span class="token punctuation">]</span><span class="token operator">:</span> <span class="token string">&quot;object&quot;</span>
+    <span class="token punctuation">[</span>object Error<span class="token punctuation">]</span><span class="token operator">:</span> <span class="token string">&quot;error&quot;</span>
+    <span class="token punctuation">[</span>object Symbol<span class="token punctuation">]</span><span class="token operator">:</span> <span class="token string">&quot;symbol&quot;</span>
+
+<span class="token keyword">function</span> <span class="token function">toType</span><span class="token punctuation">(</span><span class="token parameter">obj</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token comment">//=&gt;obj may be null / undefined   !! null == undefined</span>
+    <span class="token comment">//=&gt;return &quot;null&quot;/&quot;undefined&quot;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>obj <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    	<span class="token keyword">return</span> obj <span class="token operator">+</span> <span class="token string">&quot;&quot;</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment">// toString.call(obj);  </span>
+    <span class="token comment">// 先把传进来的obj生成一个字符串(例:[object RegExp])去class2type中寻找，如果找到了，返回后面的小写类型(例:boolean)</span>
+    <span class="token keyword">return</span> <span class="token keyword">typeof</span> obj <span class="token operator">===</span> <span class="token string">&quot;object&quot;</span> <span class="token operator">||</span> <span class="token keyword">typeof</span> obj <span class="token operator">===</span> <span class="token string">&quot;function&quot;</span> <span class="token operator">?</span> class2type<span class="token punctuation">[</span><span class="token function">toString</span><span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span>obj<span class="token punctuation">)</span><span class="token punctuation">]</span> <span class="token operator">||</span> <span class="token string">&quot;object&quot;</span> <span class="token operator">:</span> <span class="token keyword">typeof</span> obj<span class="token punctuation">;</span>
+
+<span class="token punctuation">}</span>
+
+<span class="token comment">// jQuery. type = toType; </span>
+
+</code></pre></div><h2 id="检测是否为函数"><a href="#检测是否为函数" class="header-anchor">#</a> 检测是否为函数</h2> <p><strong>原理</strong>: typeof obj === &quot;function&quot;</p> <div class="language-javascript extra-class"><pre class="language-javascript"><code><span class="token keyword">var</span> <span class="token function-variable function">isFunction</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token function">isFunction</span><span class="token punctuation">(</span><span class="token parameter">obj</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">return</span> <span class="token keyword">typeof</span> obj <span class="token operator">===</span> <span class="token string">&quot;function&quot;</span><span class="token punctuation">;</span>
+
+<span class="token punctuation">}</span><span class="token punctuation">;</span> 
+</code></pre></div><h2 id="检测是否为window对象"><a href="#检测是否为window对象" class="header-anchor">#</a> 检测是否为window对象</h2> <p><strong>原理</strong>: window. window===window</p> <div class="language-javascript extra-class"><pre class="language-javascript"><code><span class="token keyword">var</span> <span class="token function-variable function">isWindow</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token function">isWindow</span><span class="token punctuation">(</span><span class="token parameter">obj</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token comment">// 如果obj不传的话 undefined != null =&gt; 返回false</span>
+    <span class="token keyword">return</span> obj <span class="token operator">!=</span> <span class="token keyword">null</span> <span class="token operator">&amp;&amp;</span> obj <span class="token operator">===</span> obj<span class="token punctuation">.</span>window<span class="token punctuation">;</span>
+
+<span class="token punctuation">}</span><span class="token punctuation">;</span> 
+</code></pre></div><h2 id="检测是否为纯粹的对象-（数组和正则等都不是纯粹的对象）"><a href="#检测是否为纯粹的对象-（数组和正则等都不是纯粹的对象）" class="header-anchor">#</a> 检测是否为纯粹的对象{}（数组和正则等都不是纯粹的对象）</h2> <p><strong>原理</strong>: getPrototypeOf获取当前对象的原型</p> <div class="language-javascript extra-class"><pre class="language-javascript"><code><span class="token keyword">var</span> <span class="token function-variable function">isPlainObject</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token function">isPlainObject</span><span class="token punctuation">(</span><span class="token parameter">obj</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token comment">// !obj都有可能(!null / !undefined)</span>
+    <span class="token keyword">var</span> proto<span class="token punctuation">,</span> Ctor<span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>obj <span class="token operator">||</span> <span class="token function">toString</span><span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span>obj<span class="token punctuation">)</span> <span class="token operator">!==</span> <span class="token string">&quot;[object Object]&quot;</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    	<span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    
+    <span class="token comment">//=&gt;getPrototypeOf获取当前对象的原型</span>
+    proto <span class="token operator">=</span> Object<span class="token punctuation">.</span><span class="token function">getPrototypeOf</span><span class="token punctuation">(</span>obj<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// Objects with no prototype (**Object.create( null )**)</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>proto<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    	<span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment">// Objects with prototype are plain iff they were constructed by a global Object function</span>
+    Ctor <span class="token operator">=</span> <span class="token function">hasOwn</span><span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span>proto<span class="token punctuation">,</span> <span class="token string">&quot;constructor&quot;</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> proto<span class="token punctuation">.</span>constructor<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token keyword">typeof</span> Ctor <span class="token operator">===</span> <span class="token string">&quot;function&quot;</span> <span class="token operator">&amp;&amp;</span> <span class="token function">fnToString</span><span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span>Ctor<span class="token punctuation">)</span> <span class="token operator">===</span> ObjectFunctionString<span class="token punctuation">;</span>
+
+<span class="token punctuation">}</span><span class="token punctuation">;</span> 
+</code></pre></div><h2 id="检测是否为空对象"><a href="#检测是否为空对象" class="header-anchor">#</a> 检测是否为空对象</h2> <p><strong>原理</strong>: for-in循环遍历对象的可枚举属性</p> <div class="language-javascript extra-class"><pre class="language-javascript"><code><span class="token keyword">var</span> <span class="token function-variable function">isEmptyObject</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token function">isEmptyObject</span><span class="token punctuation">(</span><span class="token parameter">obj</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">var</span> name<span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>name <span class="token keyword">in</span> obj<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    	<span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+
+<span class="token punctuation">}</span><span class="token punctuation">;</span> 
+</code></pre></div><h2 id="检测是否为数组或者类数组"><a href="#检测是否为数组或者类数组" class="header-anchor">#</a> 检测是否为数组或者类数组 <span class="badge warning" style="vertical-align:top;" data-v-15b7b770>beta</span> <span class="badge tip" style="vertical-align:top;" data-v-15b7b770>重点</span></h2> <p><strong>原理</strong>: 根据数组/类数组的<strong>lenght</strong>属性特点来判断<br> <strong>步骤</strong>: <br>
+1、将obj通过类型转换(排除null, undefined等没有length属性的非标准值)取得obj. length <br>
+2、调用toType()，取得obj类型，function/window类型直接返回 <br>
+3、判定条件:array类型，length为Number, arr[length-1]存在等</p> <div class="language-javascript extra-class"><pre class="language-javascript"><code><span class="token keyword">var</span> <span class="token function-variable function">isArrayLike</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token function">isArrayLike</span><span class="token punctuation">(</span><span class="token parameter">obj</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token comment">// !!obj =&gt; (转换成Boolean值类型)</span>
+    <span class="token comment">// 1、先把传进来的obj取反取反，转换成Boolean值(排除掉null,undefined值等)</span>
+    <span class="token comment">// 2、再查看有无length属性，</span>
+    <span class="token comment">//   Function.length：1（形参的个数，默认为1） </span>
+    <span class="token comment">//   window.length：1</span>
+    
+    <span class="token keyword">var</span> length <span class="token operator">=</span> <span class="token operator">!</span><span class="token operator">!</span>obj <span class="token operator">&amp;&amp;</span> <span class="token string">&quot;length&quot;</span> <span class="token keyword">in</span> obj <span class="token operator">&amp;&amp;</span> obj<span class="token punctuation">.</span>length<span class="token punctuation">,</span>
+    	type <span class="token operator">=</span> <span class="token function">toType</span><span class="token punctuation">(</span>obj<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isFunction</span><span class="token punctuation">(</span>obj<span class="token punctuation">)</span> <span class="token operator">||</span> <span class="token function">isWindow</span><span class="token punctuation">(</span>obj<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    	<span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    
+    <span class="token comment">// 运算符优先级，先算逻辑与&amp;&amp;，再算逻辑或||</span>
+    <span class="token keyword">return</span> type <span class="token operator">===</span> <span class="token string">&quot;array&quot;</span> <span class="token operator">||</span> length <span class="token operator">===</span> <span class="token number">0</span> <span class="token operator">||</span> <span class="token keyword">typeof</span> length <span class="token operator">===</span> <span class="token string">&quot;number&quot;</span> <span class="token operator">&amp;&amp;</span> length <span class="token operator">&gt;</span> <span class="token number">0</span> <span class="token operator">&amp;&amp;</span> <span class="token punctuation">(</span>length <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token keyword">in</span> obj<span class="token punctuation">;</span>
+
+<span class="token punctuation">}</span><span class="token punctuation">;</span> 
+</code></pre></div><h2 id="如何判断一个对象是null还是undefined"><a href="#如何判断一个对象是null还是undefined" class="header-anchor">#</a> 如何判断一个对象是null还是undefined</h2> <p><strong>注意</strong>: <br>
+undefined == null  =&gt; true <br>
+但undefined === null  =&gt; false</p> <div class="language-javascript extra-class"><pre class="language-javascript"><code>obj 如果不传<span class="token punctuation">,</span> <span class="token keyword">return</span> <span class="token string">&quot;undefined&quot;</span>
+<span class="token keyword">let</span> a <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span> 
+<span class="token keyword">function</span> <span class="token function">toType</span><span class="token punctuation">(</span><span class="token parameter">obj</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>obj <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>obj <span class="token operator">===</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> obj <span class="token operator">+</span> <span class="token string">&quot;&quot;</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> obj <span class="token operator">+</span> <span class="token string">&quot;&quot;</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span>
+
+<span class="token function">toType</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// =&gt; &quot;null&quot;</span>
+</code></pre></div><h2 id="写在最后"><a href="#写在最后" class="header-anchor">#</a> 写在最后</h2> <ul><li>文中如有错误，欢迎在评论区指正，如果这篇文章帮到了你，欢迎点赞和关注</li> <li>在项目中用到最多的有，<strong>检测是否为空对象</strong>, <strong>检测是否为数组或者类数组</strong>，这两个方法最好能够手写下来，面试中大概率问到, 其中检测是否为纯粹的对象{}作为了解即可</li></ul></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/JavaScript/advance/003：尾递归调用和优化.html" class="prev">
+        003：尾递归调用和优化
+      </a></span> <span class="next"><a href="/JavaScript/advance/005：全面学习深浅克隆.html">
+        005：深度学习深浅克隆
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.06b24de5.js" defer></script><script src="/assets/js/2.a05443f6.js" defer></script><script src="/assets/js/29.30ef0dde.js" defer></script><script src="/assets/js/3.a21791ca.js" defer></script>
+  </body>
+</html>

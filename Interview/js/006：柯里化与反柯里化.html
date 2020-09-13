@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>高阶函数应用 ———— 柯里化与反柯里化 | 前端时光屋</title>
+    <meta name="description" content="梁书豪的博客">
+    <meta name="generator" content="VuePress 1.3.0">
+    <link rel="icon" href="/assets/img/head.jpg">
+    
+    <link rel="preload" href="/assets/css/0.styles.83ce72a3.css" as="style"><link rel="preload" href="/assets/js/app.06b24de5.js" as="script"><link rel="preload" href="/assets/js/2.a05443f6.js" as="script"><link rel="preload" href="/assets/js/21.6c08f73f.js" as="script"><link rel="prefetch" href="/assets/js/10.a5eaa95a.js"><link rel="prefetch" href="/assets/js/11.06e35382.js"><link rel="prefetch" href="/assets/js/12.140f4db6.js"><link rel="prefetch" href="/assets/js/13.f2fcf962.js"><link rel="prefetch" href="/assets/js/14.e39a2df6.js"><link rel="prefetch" href="/assets/js/15.b07ecf86.js"><link rel="prefetch" href="/assets/js/16.949e4dac.js"><link rel="prefetch" href="/assets/js/17.6a721f97.js"><link rel="prefetch" href="/assets/js/18.1b363edf.js"><link rel="prefetch" href="/assets/js/19.900530d5.js"><link rel="prefetch" href="/assets/js/20.e9f183ae.js"><link rel="prefetch" href="/assets/js/22.c37ad609.js"><link rel="prefetch" href="/assets/js/23.759a99ff.js"><link rel="prefetch" href="/assets/js/24.c8f3fa94.js"><link rel="prefetch" href="/assets/js/25.b58c3ab8.js"><link rel="prefetch" href="/assets/js/26.ba5e0c3b.js"><link rel="prefetch" href="/assets/js/27.ad23a71d.js"><link rel="prefetch" href="/assets/js/28.a74c53ca.js"><link rel="prefetch" href="/assets/js/29.30ef0dde.js"><link rel="prefetch" href="/assets/js/3.a21791ca.js"><link rel="prefetch" href="/assets/js/30.1e9ebdb5.js"><link rel="prefetch" href="/assets/js/31.30b7a1e3.js"><link rel="prefetch" href="/assets/js/32.9f1ded02.js"><link rel="prefetch" href="/assets/js/33.61ac7552.js"><link rel="prefetch" href="/assets/js/34.f040c739.js"><link rel="prefetch" href="/assets/js/35.2c5d08d5.js"><link rel="prefetch" href="/assets/js/36.257c41df.js"><link rel="prefetch" href="/assets/js/37.40a1bbc2.js"><link rel="prefetch" href="/assets/js/38.5415ab64.js"><link rel="prefetch" href="/assets/js/39.90b605f0.js"><link rel="prefetch" href="/assets/js/4.21591d40.js"><link rel="prefetch" href="/assets/js/40.5e9ae863.js"><link rel="prefetch" href="/assets/js/41.884155d7.js"><link rel="prefetch" href="/assets/js/42.1ec6dd60.js"><link rel="prefetch" href="/assets/js/43.47cf7283.js"><link rel="prefetch" href="/assets/js/44.7af49fad.js"><link rel="prefetch" href="/assets/js/45.6088e1a9.js"><link rel="prefetch" href="/assets/js/46.fd004b63.js"><link rel="prefetch" href="/assets/js/47.044fc351.js"><link rel="prefetch" href="/assets/js/48.55a5f3fb.js"><link rel="prefetch" href="/assets/js/49.e103d7ad.js"><link rel="prefetch" href="/assets/js/5.db726197.js"><link rel="prefetch" href="/assets/js/50.f945ce05.js"><link rel="prefetch" href="/assets/js/51.316d410a.js"><link rel="prefetch" href="/assets/js/52.92a10b4a.js"><link rel="prefetch" href="/assets/js/53.e7534ba4.js"><link rel="prefetch" href="/assets/js/54.6b19fef9.js"><link rel="prefetch" href="/assets/js/55.e3fc3b29.js"><link rel="prefetch" href="/assets/js/56.0e152b3e.js"><link rel="prefetch" href="/assets/js/57.13187b13.js"><link rel="prefetch" href="/assets/js/58.d9bda000.js"><link rel="prefetch" href="/assets/js/59.da580bc1.js"><link rel="prefetch" href="/assets/js/6.ecb72c20.js"><link rel="prefetch" href="/assets/js/60.285d6cbd.js"><link rel="prefetch" href="/assets/js/61.2cdcce13.js"><link rel="prefetch" href="/assets/js/62.cf643bd2.js"><link rel="prefetch" href="/assets/js/63.137e165f.js"><link rel="prefetch" href="/assets/js/64.ce851e8d.js"><link rel="prefetch" href="/assets/js/65.8e7d5299.js"><link rel="prefetch" href="/assets/js/66.4369c90e.js"><link rel="prefetch" href="/assets/js/67.c769b698.js"><link rel="prefetch" href="/assets/js/68.bf74184c.js"><link rel="prefetch" href="/assets/js/69.17c602b3.js"><link rel="prefetch" href="/assets/js/7.6cbb1600.js"><link rel="prefetch" href="/assets/js/70.55df3357.js"><link rel="prefetch" href="/assets/js/71.4fccac4a.js"><link rel="prefetch" href="/assets/js/72.d4eeaf2a.js"><link rel="prefetch" href="/assets/js/73.30f9528a.js"><link rel="prefetch" href="/assets/js/74.4e91b153.js"><link rel="prefetch" href="/assets/js/75.cbd8b825.js"><link rel="prefetch" href="/assets/js/76.72f7b4b9.js"><link rel="prefetch" href="/assets/js/77.a30e1989.js"><link rel="prefetch" href="/assets/js/78.3c4b8b32.js"><link rel="prefetch" href="/assets/js/79.0897d95d.js"><link rel="prefetch" href="/assets/js/8.36911a7c.js"><link rel="prefetch" href="/assets/js/80.43c8044b.js"><link rel="prefetch" href="/assets/js/81.89c13b3c.js"><link rel="prefetch" href="/assets/js/82.df5cf081.js"><link rel="prefetch" href="/assets/js/83.885deed2.js"><link rel="prefetch" href="/assets/js/84.4ed1e2fa.js"><link rel="prefetch" href="/assets/js/85.8bade5eb.js"><link rel="prefetch" href="/assets/js/86.d39c8dda.js"><link rel="prefetch" href="/assets/js/87.15d43505.js"><link rel="prefetch" href="/assets/js/88.ee14fb59.js"><link rel="prefetch" href="/assets/js/89.c5ea7888.js"><link rel="prefetch" href="/assets/js/9.6d6cea10.js"><link rel="prefetch" href="/assets/js/90.2e83c22b.js"><link rel="prefetch" href="/assets/js/91.972a9ec4.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.83ce72a3.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">前端时光屋</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  主页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="JavaScript" class="dropdown-title"><span class="title">JavaScript</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/JavaScript/basics/" class="nav-link">
+  基础
+</a></li><li class="dropdown-item"><!----> <a href="/JavaScript/advance/" class="nav-link">
+  进阶
+</a></li></ul></div></div><div class="nav-item"><a href="/Vue/base/" class="nav-link">
+  Vue
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="React" class="dropdown-title"><span class="title">React</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/React/basics/" class="nav-link">
+  用法
+</a></li><li class="dropdown-item"><!----> <a href="/React/advance/" class="nav-link">
+  原理
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Node" class="dropdown-title"><span class="title">Node</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/Node/basics/" class="nav-link">
+  用法
+</a></li><li class="dropdown-item"><!----> <a href="/Node/advance/" class="nav-link">
+  原理
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Webpack" class="dropdown-title"><span class="title">Webpack</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/Webpack/basics/" class="nav-link">
+  用法
+</a></li><li class="dropdown-item"><!----> <a href="/Webpack/advance/" class="nav-link">
+  原理
+</a></li></ul></div></div><div class="nav-item"><a href="/Performance/" class="nav-link">
+  性能相关
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="面试相关" class="dropdown-title"><span class="title">面试相关</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/Interview/js/" class="nav-link router-link-active">
+  js
+</a></li><li class="dropdown-item"><!----> <a href="/Interview/vue/" class="nav-link">
+  vue
+</a></li><li class="dropdown-item"><!----> <a href="/Interview/react/" class="nav-link">
+  react
+</a></li><li class="dropdown-item"><!----> <a href="/Interview/webpack/" class="nav-link">
+  webpack
+</a></li><li class="dropdown-item"><!----> <a href="/Interview/http/" class="nav-link">
+  http
+</a></li></ul></div></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  主页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="JavaScript" class="dropdown-title"><span class="title">JavaScript</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/JavaScript/basics/" class="nav-link">
+  基础
+</a></li><li class="dropdown-item"><!----> <a href="/JavaScript/advance/" class="nav-link">
+  进阶
+</a></li></ul></div></div><div class="nav-item"><a href="/Vue/base/" class="nav-link">
+  Vue
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="React" class="dropdown-title"><span class="title">React</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/React/basics/" class="nav-link">
+  用法
+</a></li><li class="dropdown-item"><!----> <a href="/React/advance/" class="nav-link">
+  原理
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Node" class="dropdown-title"><span class="title">Node</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/Node/basics/" class="nav-link">
+  用法
+</a></li><li class="dropdown-item"><!----> <a href="/Node/advance/" class="nav-link">
+  原理
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Webpack" class="dropdown-title"><span class="title">Webpack</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/Webpack/basics/" class="nav-link">
+  用法
+</a></li><li class="dropdown-item"><!----> <a href="/Webpack/advance/" class="nav-link">
+  原理
+</a></li></ul></div></div><div class="nav-item"><a href="/Performance/" class="nav-link">
+  性能相关
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="面试相关" class="dropdown-title"><span class="title">面试相关</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/Interview/js/" class="nav-link router-link-active">
+  js
+</a></li><li class="dropdown-item"><!----> <a href="/Interview/vue/" class="nav-link">
+  vue
+</a></li><li class="dropdown-item"><!----> <a href="/Interview/react/" class="nav-link">
+  react
+</a></li><li class="dropdown-item"><!----> <a href="/Interview/webpack/" class="nav-link">
+  webpack
+</a></li><li class="dropdown-item"><!----> <a href="/Interview/http/" class="nav-link">
+  http
+</a></li></ul></div></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>面试官系列之js</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/Interview/js/000：面试题总结.html" class="sidebar-link">000：面试题总结</a></li><li><a href="/Interview/js/001：防抖和节流的应用和实现.html" class="sidebar-link">001：防抖和节流的应用和实现</a></li><li><a href="/Interview/js/002：call、apply、bind的实现.html" class="sidebar-link">002：call、apply、bind的实现</a></li><li><a href="/Interview/js/003：发布订阅和观察者模式.html" class="sidebar-link">003：发布订阅和观察者模式</a></li><li><a href="/Interview/js/004：浏览器多进程、JS单线程，EventLoop的相爱相杀.html" class="sidebar-link">004：浏览器多进程、JS单线程，EventLoop的相爱相杀</a></li><li><a href="/Interview/js/005：检测四种方案的异同.html" class="sidebar-link">005：检测四种方案的异同</a></li><li><a href="/Interview/js/006：柯里化与反柯里化.html" class="active sidebar-link">006：柯里化与反柯里化</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/Interview/js/006：柯里化与反柯里化.html#引子" class="sidebar-link">引子</a></li><li class="sidebar-sub-header"><a href="/Interview/js/006：柯里化与反柯里化.html#柯里化" class="sidebar-link">柯里化</a></li><li class="sidebar-sub-header"><a href="/Interview/js/006：柯里化与反柯里化.html#柯里化的优势" class="sidebar-link">柯里化的优势</a></li><li class="sidebar-sub-header"><a href="/Interview/js/006：柯里化与反柯里化.html#反柯里化" class="sidebar-link">反柯里化</a></li></ul></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="高阶函数应用-————-柯里化与反柯里化"><a href="#高阶函数应用-————-柯里化与反柯里化" class="header-anchor">#</a> 高阶函数应用 ———— 柯里化与反柯里化</h1> <h2 id="引子"><a href="#引子" class="header-anchor">#</a> 引子</h2> <p>一道经典面试题：</p> <div class="language-javascript extra-class"><pre class="language-javascript"><code><span class="token comment">//JS实现一个无限累加的add函数</span>
+<span class="token function">add</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>  <span class="token comment">//1 </span>
+<span class="token function">add</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span>  <span class="token comment">//3</span>
+<span class="token function">add</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span>  <span class="token comment">//6</span>
+</code></pre></div><p>当大家看到这个面试题的时候，能否在第一时间想到使用高阶函数实现？</p> <p>在 JavaScript 中，柯里化和反柯里化是<strong>高阶函数</strong>的一种应用。<br></p> <blockquote><p>高阶函数的定义，通俗的说，函数可以作为<strong>参数</strong>传递到函数中，这个作为参数的函数叫<strong>回调函数</strong>，而拥有这个参数的函数就是<strong>高阶函数</strong>，回调函数在高阶函数中调用并传递相应的参数，在高阶函数执行时，由于回调函数的内部逻辑不同，高阶函数的执行结果也不同，非常灵活，也被叫做函数式编程。</p></blockquote> <h2 id="柯里化"><a href="#柯里化" class="header-anchor">#</a> 柯里化</h2> <p>在 JavaScript 中，函数柯里化是函数式编程的重要思想，也是高阶函数中一个重要的应用，其<strong>含义是给函数分步传递参数</strong>，每次传递部分参数，<strong>并返回一个更具体的函数接收剩下的参数</strong>，这中间可嵌套多层这样的接收部分参数的函数，直至返回最后结果。</p> <h3 id="_1、最基本的柯里化拆分"><a href="#_1、最基本的柯里化拆分" class="header-anchor">#</a> 1、最基本的柯里化拆分</h3> <div class="language-javascript extra-class"><pre class="language-javascript"><code><span class="token comment">// 原函数</span>
+<span class="token keyword">function</span> <span class="token function">add</span><span class="token punctuation">(</span><span class="token parameter">a<span class="token punctuation">,</span> b<span class="token punctuation">,</span> c</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">return</span> a <span class="token operator">+</span> b <span class="token operator">+</span> c<span class="token punctuation">;</span>
+
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 柯里化函数</span>
+<span class="token keyword">function</span> <span class="token function">addCurrying</span><span class="token punctuation">(</span><span class="token parameter">a</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">return</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">b</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">c</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> a <span class="token operator">+</span> b <span class="token operator">+</span> c<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 调用原函数</span>
+<span class="token function">add</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 6</span>
+
+<span class="token comment">// 调用柯里化函数</span>
+<span class="token function">addCurrying</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span> <span class="token comment">// 6</span>
+</code></pre></div><p>被柯里化的函数 addCurrying 每次的返回值都为一个函数，并使用下一个参数作为形参，直到三个参数都被传入后，返回的最后一个函数内部执行求和操作，其实是充分的利用了闭包的特性来实现的。</p> <h3 id="_2、柯里化通用式"><a href="#_2、柯里化通用式" class="header-anchor">#</a> 2、柯里化通用式</h3> <p>上面的柯里化函数没涉及到高阶函数，也不具备通用性，无法转换形参个数任意或未知的函数，我们接下来封装一个通用的柯里化转换函数，可以将任意函数转换成柯里化。</p> <div class="language-javascript extra-class"><pre class="language-javascript"><code><span class="token comment">// add的参数不固定，看有几个数字累计相加</span>
+<span class="token keyword">function</span> <span class="token function">add</span> <span class="token punctuation">(</span><span class="token parameter">a<span class="token punctuation">,</span> b<span class="token punctuation">,</span> c<span class="token punctuation">,</span> d</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> a<span class="token operator">+</span>b<span class="token operator">+</span>c<span class="token operator">+</span>d
+<span class="token punctuation">}</span>
+
+<span class="token keyword">function</span> <span class="token function">currying</span> <span class="token punctuation">(</span><span class="token parameter">fn<span class="token punctuation">,</span> <span class="token operator">...</span> args</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token comment">// fn 要封装成柯里化的回调函数</span>
+  <span class="token comment">// args 上一次传入的参数</span>
+
+  <span class="token comment">// fn. length 回调函数的参数的总和</span>
+  <span class="token comment">// args. lengtth curring函数 后面的参数总和 </span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>fn<span class="token punctuation">.</span> length <span class="token operator">===</span> args<span class="token punctuation">.</span> length<span class="token punctuation">)</span> <span class="token punctuation">{</span>  <span class="token comment">// 如：currying(add, 1, 2, 3, 4)</span>
+
+    <span class="token keyword">return</span> <span class="token function">fn</span><span class="token punctuation">(</span><span class="token operator">...</span>args<span class="token punctuation">)</span>
+
+  <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+
+    <span class="token comment">// 继续分步传递参数 newArgs 新一次传递的参数</span>
+    <span class="token keyword">return</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter"><span class="token operator">...</span>newArgs</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token comment">// 将先传递的参数和后传递的参数 结合在一起</span>
+      <span class="token keyword">let</span> allArgs <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token operator">...</span>args<span class="token punctuation">,</span> <span class="token operator">...</span>newArgs<span class="token punctuation">]</span>
+      <span class="token keyword">return</span> <span class="token function">currying</span><span class="token punctuation">(</span>fn<span class="token punctuation">,</span> <span class="token operator">...</span>allArgs<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">let</span> fn1 <span class="token operator">=</span> <span class="token function">currying</span><span class="token punctuation">(</span>add<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token comment">// 3</span>
+<span class="token keyword">let</span> fn2 <span class="token operator">=</span> <span class="token function">fn1</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span>  <span class="token comment">// 6</span>
+<span class="token keyword">let</span> fn3 <span class="token operator">=</span> <span class="token function">fn2</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span>  <span class="token comment">// 10</span>
+</code></pre></div><p>函数 currying 算是比较高级的转换柯里化的通用式，可以随意拆分参数，假设一个被转换的函数有多个形参，我们可以在任意环节传入任意个数的参数进行拆分，举一个例子，假如 5 个参数，第一次可以传入 2 个，第二次可以传入 1 个, 第三次可以传入剩下的，也有其他的多种传参和拆分方案，因为在 currying 内部收集参数的同时按照被转换函数的形参顺序进行了更正.</p> <h2 id="柯里化的优势"><a href="#柯里化的优势" class="header-anchor">#</a> 柯里化的优势</h2> <h3 id="_1、参数复用"><a href="#_1、参数复用" class="header-anchor">#</a> 1、参数复用</h3> <div class="language-javascript extra-class"><pre class="language-javascript"><code><span class="token comment">// 正常正则验证字符串 reg. test(txt)</span>
+
+<span class="token comment">// 函数封装后</span>
+<span class="token keyword">function</span> <span class="token function">check</span><span class="token punctuation">(</span><span class="token parameter">reg<span class="token punctuation">,</span> txt</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">return</span> reg<span class="token punctuation">.</span><span class="token function">test</span><span class="token punctuation">(</span>txt<span class="token punctuation">)</span>
+
+<span class="token punctuation">}</span>
+
+<span class="token function">check</span><span class="token punctuation">(</span><span class="token regex">/\d+/g</span><span class="token punctuation">,</span> <span class="token string">'test'</span><span class="token punctuation">)</span>       <span class="token comment">//false</span>
+<span class="token function">check</span><span class="token punctuation">(</span><span class="token regex">/[a-z]+/g</span><span class="token punctuation">,</span> <span class="token string">'test'</span><span class="token punctuation">)</span>    <span class="token comment">//true</span>
+
+<span class="token comment">// Currying后</span>
+<span class="token keyword">function</span> <span class="token function">curryingCheck</span><span class="token punctuation">(</span><span class="token parameter">reg</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">return</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">txt</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> reg<span class="token punctuation">.</span><span class="token function">test</span><span class="token punctuation">(</span>txt<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span>
+
+<span class="token keyword">var</span> hasNumber <span class="token operator">=</span> <span class="token function">curryingCheck</span><span class="token punctuation">(</span><span class="token regex">/\d+/g</span><span class="token punctuation">)</span>
+<span class="token keyword">var</span> hasLetter <span class="token operator">=</span> <span class="token function">curryingCheck</span><span class="token punctuation">(</span><span class="token regex">/[a-z]+/g</span><span class="token punctuation">)</span>
+
+<span class="token function">hasNumber</span><span class="token punctuation">(</span><span class="token string">'test1'</span><span class="token punctuation">)</span>      <span class="token comment">// true</span>
+<span class="token function">hasNumber</span><span class="token punctuation">(</span><span class="token string">'testtest'</span><span class="token punctuation">)</span>   <span class="token comment">// false</span>
+<span class="token function">hasLetter</span><span class="token punctuation">(</span><span class="token string">'21212'</span><span class="token punctuation">)</span>      <span class="token comment">// false</span>
+</code></pre></div><p>上面的示例是一个正则的校验，正常来说直接调用check函数就可以了，但是如果我有很多地方都要校验是否有数字，其实就是需要将第一个参数reg进行复用，这样别的地方就能够直接调用hasNumber，hasLetter等函数，让参数能够复用，调用起来也更方便。</p> <h3 id="_2、bind的延迟运行（预处理函数）"><a href="#_2、bind的延迟运行（预处理函数）" class="header-anchor">#</a> 2、bind的延迟运行（预处理函数）</h3> <div class="language-javascript extra-class"><pre class="language-javascript"><code>Function<span class="token punctuation">.</span> prototype<span class="token punctuation">.</span> <span class="token function-variable function">bind</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">context</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">var</span> _this <span class="token operator">=</span> <span class="token keyword">this</span>
+    <span class="token keyword">var</span> args <span class="token operator">=</span> <span class="token class-name">Array</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function">slice</span><span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span>arguments<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>
+
+ 
+
+    <span class="token keyword">return</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token function">_this</span><span class="token punctuation">.</span><span class="token function">apply</span><span class="token punctuation">(</span>context<span class="token punctuation">,</span> args<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span>
+像我们js中经常使用的bind，实现的机制就是Currying<span class="token punctuation">.</span> 
+
+</code></pre></div><h2 id="反柯里化"><a href="#反柯里化" class="header-anchor">#</a> 反柯里化</h2> <p>反柯里化通用式的参数为一个希望可以<strong>被其他对象调用</strong>的<strong>方法或函数</strong>，通过调用通用式<strong>返回一个函数</strong>，这个函数的<strong>第一个参数为要执行方法的对象</strong>，后面的参数为执行这个方法时<strong>需要传递的参数</strong>。</p> <h3 id="_1、反柯里化通用式-es5"><a href="#_1、反柯里化通用式-es5" class="header-anchor">#</a> 1、反柯里化通用式 ES5</h3> <div class="language-javascript extra-class"><pre class="language-javascript"><code><span class="token keyword">function</span> <span class="token function">unCurrying</span><span class="token punctuation">(</span><span class="token parameter">fn</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+   <span class="token keyword">let</span> obj <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">.</span> <span class="token function">shift</span><span class="token punctuation">.</span> <span class="token function">call</span><span class="token punctuation">(</span>arguments<span class="token punctuation">)</span>  <span class="token comment">// shift() 方法从数组中删除第一个元素，并返回该元素的值。改变原数组</span>
+   <span class="token keyword">return</span> <span class="token function">fn</span><span class="token punctuation">.</span> <span class="token function">apply</span><span class="token punctuation">(</span>obj<span class="token punctuation">,</span> arguments<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">let</span> toString <span class="token operator">=</span> <span class="token function">unCurrying</span><span class="token punctuation">(</span>Object<span class="token punctuation">.</span> prototype<span class="token punctuation">.</span> toString<span class="token punctuation">)</span>
+
+console<span class="token punctuation">.</span> <span class="token function">log</span><span class="token punctuation">(</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token string">'hello'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>  <span class="token comment">// [object String]</span>
+</code></pre></div><div class="custom-block tip"><p class="custom-block-title">TIP</p> <p>借鉴：<br> <a href="https://www.jianshu.com/p/097118ed19b1" target="_blank" rel="noopener noreferrer">高阶函数应用 —— 柯里化与反柯里化<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a><br> <a href="https://www.jianshu.com/p/2975c25e4d71" target="_blank" rel="noopener noreferrer">详解JS函数柯里化<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p></div></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/Interview/js/005：检测四种方案的异同.html" class="prev">
+        005：检测四种方案的异同
+      </a></span> <!----></p></div> </main></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.06b24de5.js" defer></script><script src="/assets/js/2.a05443f6.js" defer></script><script src="/assets/js/21.6c08f73f.js" defer></script>
+  </body>
+</html>

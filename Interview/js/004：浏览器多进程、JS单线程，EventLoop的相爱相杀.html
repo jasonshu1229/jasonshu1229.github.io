@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>浏览器多进程、JS单线程，EventLoop的相爱相杀 | 前端时光屋</title>
+    <meta name="description" content="梁书豪的博客">
+    <meta name="generator" content="VuePress 1.3.0">
+    <link rel="icon" href="/assets/img/head.jpg">
+    
+    <link rel="preload" href="/assets/css/0.styles.83ce72a3.css" as="style"><link rel="preload" href="/assets/js/app.06b24de5.js" as="script"><link rel="preload" href="/assets/js/2.a05443f6.js" as="script"><link rel="preload" href="/assets/js/20.e9f183ae.js" as="script"><link rel="prefetch" href="/assets/js/10.a5eaa95a.js"><link rel="prefetch" href="/assets/js/11.06e35382.js"><link rel="prefetch" href="/assets/js/12.140f4db6.js"><link rel="prefetch" href="/assets/js/13.f2fcf962.js"><link rel="prefetch" href="/assets/js/14.e39a2df6.js"><link rel="prefetch" href="/assets/js/15.b07ecf86.js"><link rel="prefetch" href="/assets/js/16.949e4dac.js"><link rel="prefetch" href="/assets/js/17.6a721f97.js"><link rel="prefetch" href="/assets/js/18.1b363edf.js"><link rel="prefetch" href="/assets/js/19.900530d5.js"><link rel="prefetch" href="/assets/js/21.6c08f73f.js"><link rel="prefetch" href="/assets/js/22.c37ad609.js"><link rel="prefetch" href="/assets/js/23.759a99ff.js"><link rel="prefetch" href="/assets/js/24.c8f3fa94.js"><link rel="prefetch" href="/assets/js/25.b58c3ab8.js"><link rel="prefetch" href="/assets/js/26.ba5e0c3b.js"><link rel="prefetch" href="/assets/js/27.ad23a71d.js"><link rel="prefetch" href="/assets/js/28.a74c53ca.js"><link rel="prefetch" href="/assets/js/29.30ef0dde.js"><link rel="prefetch" href="/assets/js/3.a21791ca.js"><link rel="prefetch" href="/assets/js/30.1e9ebdb5.js"><link rel="prefetch" href="/assets/js/31.30b7a1e3.js"><link rel="prefetch" href="/assets/js/32.9f1ded02.js"><link rel="prefetch" href="/assets/js/33.61ac7552.js"><link rel="prefetch" href="/assets/js/34.f040c739.js"><link rel="prefetch" href="/assets/js/35.2c5d08d5.js"><link rel="prefetch" href="/assets/js/36.257c41df.js"><link rel="prefetch" href="/assets/js/37.40a1bbc2.js"><link rel="prefetch" href="/assets/js/38.5415ab64.js"><link rel="prefetch" href="/assets/js/39.90b605f0.js"><link rel="prefetch" href="/assets/js/4.21591d40.js"><link rel="prefetch" href="/assets/js/40.5e9ae863.js"><link rel="prefetch" href="/assets/js/41.884155d7.js"><link rel="prefetch" href="/assets/js/42.1ec6dd60.js"><link rel="prefetch" href="/assets/js/43.47cf7283.js"><link rel="prefetch" href="/assets/js/44.7af49fad.js"><link rel="prefetch" href="/assets/js/45.6088e1a9.js"><link rel="prefetch" href="/assets/js/46.fd004b63.js"><link rel="prefetch" href="/assets/js/47.044fc351.js"><link rel="prefetch" href="/assets/js/48.55a5f3fb.js"><link rel="prefetch" href="/assets/js/49.e103d7ad.js"><link rel="prefetch" href="/assets/js/5.db726197.js"><link rel="prefetch" href="/assets/js/50.f945ce05.js"><link rel="prefetch" href="/assets/js/51.316d410a.js"><link rel="prefetch" href="/assets/js/52.92a10b4a.js"><link rel="prefetch" href="/assets/js/53.e7534ba4.js"><link rel="prefetch" href="/assets/js/54.6b19fef9.js"><link rel="prefetch" href="/assets/js/55.e3fc3b29.js"><link rel="prefetch" href="/assets/js/56.0e152b3e.js"><link rel="prefetch" href="/assets/js/57.13187b13.js"><link rel="prefetch" href="/assets/js/58.d9bda000.js"><link rel="prefetch" href="/assets/js/59.da580bc1.js"><link rel="prefetch" href="/assets/js/6.ecb72c20.js"><link rel="prefetch" href="/assets/js/60.285d6cbd.js"><link rel="prefetch" href="/assets/js/61.2cdcce13.js"><link rel="prefetch" href="/assets/js/62.cf643bd2.js"><link rel="prefetch" href="/assets/js/63.137e165f.js"><link rel="prefetch" href="/assets/js/64.ce851e8d.js"><link rel="prefetch" href="/assets/js/65.8e7d5299.js"><link rel="prefetch" href="/assets/js/66.4369c90e.js"><link rel="prefetch" href="/assets/js/67.c769b698.js"><link rel="prefetch" href="/assets/js/68.bf74184c.js"><link rel="prefetch" href="/assets/js/69.17c602b3.js"><link rel="prefetch" href="/assets/js/7.6cbb1600.js"><link rel="prefetch" href="/assets/js/70.55df3357.js"><link rel="prefetch" href="/assets/js/71.4fccac4a.js"><link rel="prefetch" href="/assets/js/72.d4eeaf2a.js"><link rel="prefetch" href="/assets/js/73.30f9528a.js"><link rel="prefetch" href="/assets/js/74.4e91b153.js"><link rel="prefetch" href="/assets/js/75.cbd8b825.js"><link rel="prefetch" href="/assets/js/76.72f7b4b9.js"><link rel="prefetch" href="/assets/js/77.a30e1989.js"><link rel="prefetch" href="/assets/js/78.3c4b8b32.js"><link rel="prefetch" href="/assets/js/79.0897d95d.js"><link rel="prefetch" href="/assets/js/8.36911a7c.js"><link rel="prefetch" href="/assets/js/80.43c8044b.js"><link rel="prefetch" href="/assets/js/81.89c13b3c.js"><link rel="prefetch" href="/assets/js/82.df5cf081.js"><link rel="prefetch" href="/assets/js/83.885deed2.js"><link rel="prefetch" href="/assets/js/84.4ed1e2fa.js"><link rel="prefetch" href="/assets/js/85.8bade5eb.js"><link rel="prefetch" href="/assets/js/86.d39c8dda.js"><link rel="prefetch" href="/assets/js/87.15d43505.js"><link rel="prefetch" href="/assets/js/88.ee14fb59.js"><link rel="prefetch" href="/assets/js/89.c5ea7888.js"><link rel="prefetch" href="/assets/js/9.6d6cea10.js"><link rel="prefetch" href="/assets/js/90.2e83c22b.js"><link rel="prefetch" href="/assets/js/91.972a9ec4.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.83ce72a3.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">前端时光屋</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  主页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="JavaScript" class="dropdown-title"><span class="title">JavaScript</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/JavaScript/basics/" class="nav-link">
+  基础
+</a></li><li class="dropdown-item"><!----> <a href="/JavaScript/advance/" class="nav-link">
+  进阶
+</a></li></ul></div></div><div class="nav-item"><a href="/Vue/base/" class="nav-link">
+  Vue
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="React" class="dropdown-title"><span class="title">React</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/React/basics/" class="nav-link">
+  用法
+</a></li><li class="dropdown-item"><!----> <a href="/React/advance/" class="nav-link">
+  原理
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Node" class="dropdown-title"><span class="title">Node</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/Node/basics/" class="nav-link">
+  用法
+</a></li><li class="dropdown-item"><!----> <a href="/Node/advance/" class="nav-link">
+  原理
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Webpack" class="dropdown-title"><span class="title">Webpack</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/Webpack/basics/" class="nav-link">
+  用法
+</a></li><li class="dropdown-item"><!----> <a href="/Webpack/advance/" class="nav-link">
+  原理
+</a></li></ul></div></div><div class="nav-item"><a href="/Performance/" class="nav-link">
+  性能相关
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="面试相关" class="dropdown-title"><span class="title">面试相关</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/Interview/js/" class="nav-link router-link-active">
+  js
+</a></li><li class="dropdown-item"><!----> <a href="/Interview/vue/" class="nav-link">
+  vue
+</a></li><li class="dropdown-item"><!----> <a href="/Interview/react/" class="nav-link">
+  react
+</a></li><li class="dropdown-item"><!----> <a href="/Interview/webpack/" class="nav-link">
+  webpack
+</a></li><li class="dropdown-item"><!----> <a href="/Interview/http/" class="nav-link">
+  http
+</a></li></ul></div></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  主页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="JavaScript" class="dropdown-title"><span class="title">JavaScript</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/JavaScript/basics/" class="nav-link">
+  基础
+</a></li><li class="dropdown-item"><!----> <a href="/JavaScript/advance/" class="nav-link">
+  进阶
+</a></li></ul></div></div><div class="nav-item"><a href="/Vue/base/" class="nav-link">
+  Vue
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="React" class="dropdown-title"><span class="title">React</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/React/basics/" class="nav-link">
+  用法
+</a></li><li class="dropdown-item"><!----> <a href="/React/advance/" class="nav-link">
+  原理
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Node" class="dropdown-title"><span class="title">Node</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/Node/basics/" class="nav-link">
+  用法
+</a></li><li class="dropdown-item"><!----> <a href="/Node/advance/" class="nav-link">
+  原理
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Webpack" class="dropdown-title"><span class="title">Webpack</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/Webpack/basics/" class="nav-link">
+  用法
+</a></li><li class="dropdown-item"><!----> <a href="/Webpack/advance/" class="nav-link">
+  原理
+</a></li></ul></div></div><div class="nav-item"><a href="/Performance/" class="nav-link">
+  性能相关
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="面试相关" class="dropdown-title"><span class="title">面试相关</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/Interview/js/" class="nav-link router-link-active">
+  js
+</a></li><li class="dropdown-item"><!----> <a href="/Interview/vue/" class="nav-link">
+  vue
+</a></li><li class="dropdown-item"><!----> <a href="/Interview/react/" class="nav-link">
+  react
+</a></li><li class="dropdown-item"><!----> <a href="/Interview/webpack/" class="nav-link">
+  webpack
+</a></li><li class="dropdown-item"><!----> <a href="/Interview/http/" class="nav-link">
+  http
+</a></li></ul></div></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>面试官系列之js</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/Interview/js/000：面试题总结.html" class="sidebar-link">000：面试题总结</a></li><li><a href="/Interview/js/001：防抖和节流的应用和实现.html" class="sidebar-link">001：防抖和节流的应用和实现</a></li><li><a href="/Interview/js/002：call、apply、bind的实现.html" class="sidebar-link">002：call、apply、bind的实现</a></li><li><a href="/Interview/js/003：发布订阅和观察者模式.html" class="sidebar-link">003：发布订阅和观察者模式</a></li><li><a href="/Interview/js/004：浏览器多进程、JS单线程，EventLoop的相爱相杀.html" class="active sidebar-link">004：浏览器多进程、JS单线程，EventLoop的相爱相杀</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/Interview/js/004：浏览器多进程、JS单线程，EventLoop的相爱相杀.html#引子" class="sidebar-link">引子</a></li><li class="sidebar-sub-header"><a href="/Interview/js/004：浏览器多进程、JS单线程，EventLoop的相爱相杀.html#cpu" class="sidebar-link">CPU</a></li><li class="sidebar-sub-header"><a href="/Interview/js/004：浏览器多进程、JS单线程，EventLoop的相爱相杀.html#进程" class="sidebar-link">进程</a></li><li class="sidebar-sub-header"><a href="/Interview/js/004：浏览器多进程、JS单线程，EventLoop的相爱相杀.html#cpu、进程、线程之间的关系" class="sidebar-link">CPU、进程、线程之间的关系</a></li><li class="sidebar-sub-header"><a href="/Interview/js/004：浏览器多进程、JS单线程，EventLoop的相爱相杀.html#浏览器是多进程的" class="sidebar-link">浏览器是多进程的</a></li><li class="sidebar-sub-header"><a href="/Interview/js/004：浏览器多进程、JS单线程，EventLoop的相爱相杀.html#浏览器包含了哪些进程" class="sidebar-link">浏览器包含了哪些进程</a></li><li class="sidebar-sub-header"><a href="/Interview/js/004：浏览器多进程、JS单线程，EventLoop的相爱相杀.html#浏览器内核（渲染进程）" class="sidebar-link">浏览器内核（渲染进程）</a></li><li class="sidebar-sub-header"><a href="/Interview/js/004：浏览器多进程、JS单线程，EventLoop的相爱相杀.html#从-event-loop-看-js-的运行机制" class="sidebar-link">从 Event Loop 看 JS 的运行机制</a></li><li class="sidebar-sub-header"><a href="/Interview/js/004：浏览器多进程、JS单线程，EventLoop的相爱相杀.html#宏任务、微任务" class="sidebar-link">宏任务、微任务</a></li><li class="sidebar-sub-header"><a href="/Interview/js/004：浏览器多进程、JS单线程，EventLoop的相爱相杀.html#什么是微任务" class="sidebar-link">什么是微任务</a></li><li class="sidebar-sub-header"><a href="/Interview/js/004：浏览器多进程、JS单线程，EventLoop的相爱相杀.html#总结" class="sidebar-link">总结</a></li><li class="sidebar-sub-header"><a href="/Interview/js/004：浏览器多进程、JS单线程，EventLoop的相爱相杀.html#参考" class="sidebar-link">参考</a></li><li class="sidebar-sub-header"><a href="/Interview/js/004：浏览器多进程、JS单线程，EventLoop的相爱相杀.html#写在最后" class="sidebar-link">写在最后</a></li></ul></li><li><a href="/Interview/js/005：检测四种方案的异同.html" class="sidebar-link">005：检测四种方案的异同</a></li><li><a href="/Interview/js/006：柯里化与反柯里化.html" class="sidebar-link">006：柯里化与反柯里化</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="浏览器多进程、js单线程，eventloop的相爱相杀"><a href="#浏览器多进程、js单线程，eventloop的相爱相杀" class="header-anchor">#</a> 浏览器多进程、JS单线程，EventLoop的相爱相杀</h1> <h2 id="引子"><a href="#引子" class="header-anchor">#</a> 引子</h2> <p>几乎在每一本JS相关的书籍中，都会说JS是单线程的，JS是通过事件队列(Event Loop)的方式来实现异步回调的。 对很多初学JS的人来说，根本搞不清楚单线程的JS为什么拥有异步的能力，所以，我试图从进程、线程的角度来解释这个问题。
+<br></p> <h2 id="cpu"><a href="#cpu" class="header-anchor">#</a> CPU</h2> <p><img src="https://user-gold-cdn.xitu.io/2019/10/23/16df8fefc9d56f17?w=517&amp;h=335&amp;f=png&amp;s=92422" alt="">
+计算机的核心是CPU，它承担了所有的计算任务。</p> <p>它就像一座工厂，时刻在运行。</p> <h2 id="进程"><a href="#进程" class="header-anchor">#</a> 进程</h2> <p><img src="https://user-gold-cdn.xitu.io/2019/10/23/16df90020c4f6b8a?w=603&amp;h=428&amp;f=png&amp;s=182610" alt="">
+假定工厂的电力有限，一次只能供给一个车间使用。
+也就是说，一个车间开工的时候，其他车间都必须停工。
+背后的含义就是，单个CPU一次只能运行一个任务。
+进程就好比工厂的车间，它代表CPU所能处理的单个任务。
+进程之间相互独立，任一时刻，CPU总是运行一个进程，其他进程处于非运行状态。
+CPU使用时间片轮转进度算法来实现同时运行多个
+<font color="#dd0000" background="black">进程</font><br></p> <h2 id="cpu、进程、线程之间的关系"><a href="#cpu、进程、线程之间的关系" class="header-anchor">#</a> CPU、进程、线程之间的关系</h2> <p>从上文我们已经简单了解了CPU、进程、线程，简单汇总一下</p> <ul><li>进程是cpu资源分配的最小单位（是能拥有资源和独立运行的最小单位）</li> <li>线程是cpu调度的最小单位（线程是建立在进程的基础上的一次程序运行单位，一个进程中可以有多个线程）</li> <li>单线程与多线程，都是指在一个进程内的单和多</li></ul> <h2 id="浏览器是多进程的"><a href="#浏览器是多进程的" class="header-anchor">#</a> 浏览器是多进程的</h2> <p>我们已经知道了CPU、进程、线程之间的关系，对于计算机来说，每一个应用程序都是一个进程， 而每一个应用程序都会分别有很多的功能模块，这些功能模块实际上是通过子进程来实现的。 对于这种子进程的扩展方式，我们可以称这个应用程序是多进程的。
+<br><br>
+而对于浏览器来说，浏览器就是多进程的，我在Chrome浏览器中打开了多个tab，然后打开mac中的活动监视器：
+<img src="https://user-gold-cdn.xitu.io/2019/10/24/16dfd6e708b32865?w=694&amp;h=258&amp;f=png&amp;s=163832" alt="">
+如上图，我们可以看到一个Chrome浏览器启动了好多个进程。
+<br>
+总结一下：</p> <ul><li>浏览器是多进程的</li> <li>每一个Tab页，都是一个独立的进程</li></ul> <h2 id="浏览器包含了哪些进程"><a href="#浏览器包含了哪些进程" class="header-anchor">#</a> 浏览器包含了哪些进程</h2> <ul><li>主进程
+<ul><li>协调控制其他子进程（创建，销毁）</li> <li>浏览器界面显示，用户交互，前进、后退、收藏</li> <li>将渲染进程得到的内存中的Bitmap，绘制到用户界面上</li> <li>处理不可见操作，网络请求，文件访问等</li></ul></li> <li>第三方插件进程
+<ul><li>每种类型的插件对应一个进程，仅当使用该插件时才创建</li></ul></li> <li>GPU进程
+<ul><li>用于3D绘制等</li></ul></li> <li>渲染进程，就是我们说的浏览器内核
+<ul><li>负责页面渲染，脚本执行，事件处理等</li> <li>每个tab页一个渲染进程</li></ul></li></ul> <br>
+那么浏览器中包含了这么多的进程，那么对于普通的前端操作来说，最重要的是什么呢？
+<p>答案：当然是<font color="#dd0000" background="black">渲染进程</font>啦，也就是我们常说的<font color="#dd0000" background="black">浏览器内核</font></p> <h2 id="浏览器内核（渲染进程）"><a href="#浏览器内核（渲染进程）" class="header-anchor">#</a> 浏览器内核（渲染进程）</h2> <p>从前文我们得知，进程和线程是一对多的关系，也就是说一个进程包含了多条线程。
+<br><br>
+而对于渲染进程来说，它当然也是多线程的了，接下来我们来看一下渲染进程包含哪些线程。</p> <ul><li>GUI渲染线程
+<ul><li>负责渲染页面，布局和绘制</li> <li>页面需要重绘和回流时，该线程就会执行</li> <li>与js引擎线程互斥，防止渲染结果不可预期</li></ul></li> <li>JS引擎线程
+<ul><li>负责处理解析和执行javascript脚本程序</li> <li>只有一个JS引擎线程（单线程）</li> <li>与GUI渲染线程互斥，防止渲染结果不可预期</li></ul></li> <li>事件触发线程
+<ul><li>用来控制事件循环（鼠标点击、setTimeout、ajax等）</li> <li>当事件满足触发条件时，将事件放入到JS引擎所在的执行队列中</li></ul></li> <li>定时触发器线程
+<ul><li>setInterval与setTimeout所在的线程</li> <li>定时任务并不是由JS引擎计时的，是由定时触发线程来计时的</li> <li>计时完毕后，通知事件触发线程</li></ul></li> <li>异步http请求线程
+<ul><li>浏览器有一个单独的线程用于处理AJAX请求</li> <li>当请求完成时，若有回调函数，通知事件触发线程</li></ul></li></ul> <br>
+当我们了解了渲染进程包含的这些线程后，我们思考两个问题：
+1、为什么 javascript 是单线程的
+<br>
+2、为什么 GUI 渲染线程为什么与 JS 引擎线程互斥
+<h3 id="为什么-javascript-是单线程的"><a href="#为什么-javascript-是单线程的" class="header-anchor">#</a> 为什么 javascript 是单线程的</h3> <p>首先是历史原因，在创建 javascript 这门语言时，多进程多线程的架构并不流行，硬件支持并不好。<br><br>
+其次是因为多线程的复杂性，多线程操作需要加锁，编码的复杂性会增高。<br><br>
+而且，如果同时操作 DOM ，在多线程不加锁的情况下，最终会导致 DOM 渲染的结果不可预期。</p> <h3 id="为什么-gui-渲染线程与-js-引擎线程互斥"><a href="#为什么-gui-渲染线程与-js-引擎线程互斥" class="header-anchor">#</a> 为什么 GUI 渲染线程与 JS 引擎线程互斥</h3> <p>这是由于 JS 是可以操作 DOM 的，如果同时修改元素属性并同时渲染界面(即 JS线程和UI线程同时运行)， 那么渲染线程前后获得的元素就可能不一致了。
+<br><br>
+因此，为了防止渲染出现不可预期的结果，浏览器设定 GUI渲染线程和JS引擎线程为互斥关系， 当JS引擎线程执行时GUI渲染线程会被挂起，GUI更新则会被保存在一个队列中等待JS引擎线程空闲时立即被执行。</p> <h2 id="从-event-loop-看-js-的运行机制"><a href="#从-event-loop-看-js-的运行机制" class="header-anchor">#</a> 从 Event Loop 看 JS 的运行机制</h2> <p>到了这里，终于要进入我们的主题，什么是 Event Loop
+<br><br>
+先理解一些概念：
+<br></p> <ul><li>JS 分为同步任务和异步任务</li> <li>同步任务都在JS引擎线程上执行，形成一个执行栈</li> <li>事件触发线程管理一个任务队列，异步任务触发条件达成，将回调事件放到任务队列中</li> <li>执行栈中所有同步任务执行完毕，此时JS引擎线程空闲，系统会读取任务队列，将可运行的异步任务回调事件添加到执行栈中，开始执行</li></ul> <p><img src="https://user-gold-cdn.xitu.io/2019/10/24/16dfe514e724df5f?w=774&amp;h=437&amp;f=png&amp;s=74678" alt=""></p> <br>
+在前端开发中我们会通过setTimeout/setInterval来指定定时任务，会通过XHR/fetch发送网络请求， 接下来简述一下setTimeout/setInterval和XHR/fetch到底做了什么事
+<br><br>
+我们知道，不管是setTimeout/setInterval和XHR/fetch代码，在这些代码执行时， 本身是同步任务，而其中的回调函数才是异步任务。
+<br><br>
+当代码执行到setTimeout/setInterval时，实际上是JS引擎线程通知定时触发器线程，间隔一个时间后，会触发一个回调事件， 而定时触发器线程在接收到这个消息后，会在等待的时间后，将回调事件放入到由事件触发线程所管理的事件队列中。
+<br><br>
+当代码执行到XHR/fetch时，实际上是JS引擎线程通知异步http请求线程，发送一个网络请求，并制定请求完成后的回调事件， 而异步http请求线程在接收到这个消息后，会在请求成功后，<font color="#dd0000" background="black">将回调事件放入到由事件触发线程所管理的事件队列中。</font> <br><br>
+当我们的同步任务执行完，JS引擎线程会询问事件触发线程，在事件队列中是否有待执行的回调函数，如果有就会加入到执行栈中交给JS引擎线程执行
+<br><br>
+用一张图来解释：
+<p><img src="https://user-gold-cdn.xitu.io/2019/10/24/16dfe54f9781b4cf?w=726&amp;h=463&amp;f=png&amp;s=78752" alt="">
+再用代码来解释一下：</p> <div class="language-javascript extra-class"><pre class="language-javascript"><code><span class="token keyword">let</span> <span class="token function-variable function">timerCallback</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span> <span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'wait one second'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+<span class="token punctuation">}</span><span class="token punctuation">;</span> 
+<span class="token keyword">let</span> <span class="token function-variable function">httpCallback</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span> <span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'get server data success'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+<span class="token punctuation">}</span>
+
+同步任务
+console<span class="token punctuation">.</span> <span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'hello'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+同步任务
+通知定时器线程 <span class="token number">1</span>s 后将 timerCallback 交由事件触发线程处理
+<span class="token number">1</span>s 后事件触发线程将 timerCallback 加入到事件队列中
+<span class="token function">setTimeout</span><span class="token punctuation">(</span>timerCallback<span class="token punctuation">,</span> <span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+
+同步任务
+通知异步http请求线程发送网络请求，请求成功后将 httpCallback 交由事件触发线程处理
+
+请求成功后事件触发线程将 httpCallback 加入到事件队列中
+$<span class="token punctuation">.</span> <span class="token keyword">get</span><span class="token punctuation">(</span><span class="token string">'www. xxxx. com'</span><span class="token punctuation">,</span> httpCallback<span class="token punctuation">)</span><span class="token punctuation">;</span> 
+
+同步任务
+console<span class="token punctuation">.</span> <span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'world'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+
+所有同步任务执行完后
+询问事件触发线程在事件事件队列中是否有需要执行的回调函数
+如果没有，一直询问，直到有为止
+如果有，将回调事件加入执行栈中，开始执行回调代码
+</code></pre></div><p>总结一下：</p> <ul><li>JS引擎线程只执行执行栈中的事件</li> <li>执行栈中的代码执行完毕，就会读取事件队列中的事件</li> <li>事件队列中的回调事件，是由各自线程插入到事件队列中的</li> <li>如此循环</li></ul> <h2 id="宏任务、微任务"><a href="#宏任务、微任务" class="header-anchor">#</a> 宏任务、微任务</h2> <p>当我们基本了解了什么是执行栈，什么是事件队列之后，我们深入了解一下事件循环中宏任务、微任务</p> <h3 id="什么是宏任务"><a href="#什么是宏任务" class="header-anchor">#</a> 什么是宏任务</h3> <p>我们可以将每次执行栈执行的代码当做是一个宏任务（包括每次从事件队列中获取一个事件回调并放到执行栈中执行）， 每一个宏任务会从头到尾执行完毕，不会执行其他。</p> <p>我们前文提到过JS引擎线程和GUI渲染线程是互斥的关系，浏览器为了能够使宏任务和DOM任务有序的进行，会在一个宏任务执行结果后，在下一个宏任务执行前，GUI渲染线程开始工作，对页面进行渲染。</p> <div class="language-javascript extra-class"><pre class="language-javascript"><code><span class="token comment">// 宏任务--&gt;渲染--&gt;宏任务--&gt;渲染--&gt;渲染．．．</span>
+</code></pre></div><p>主代码块，setTimeout，setInterval等，都属于宏任务
+<br><br> <strong>第一个例子</strong></p> <div class="language-javascript extra-class"><pre class="language-javascript"><code>document<span class="token punctuation">.</span> body<span class="token punctuation">.</span> style <span class="token operator">=</span> <span class="token string">'background:black'</span><span class="token punctuation">;</span> 
+document<span class="token punctuation">.</span> body<span class="token punctuation">.</span> style <span class="token operator">=</span> <span class="token string">'background:red'</span><span class="token punctuation">;</span> 
+document<span class="token punctuation">.</span> body<span class="token punctuation">.</span> style <span class="token operator">=</span> <span class="token string">'background:blue'</span><span class="token punctuation">;</span> 
+document<span class="token punctuation">.</span> body<span class="token punctuation">.</span> style <span class="token operator">=</span> <span class="token string">'background:grey'</span><span class="token punctuation">;</span> 
+</code></pre></div><p>我们可以将这段代码放到浏览器的控制台执行以下，看一下效果：</p> <p><img src="https://user-gold-cdn.xitu.io/2019/8/20/16caca3e44d7d357?imageslim" alt="">
+我们会看到的结果是，页面背景会在瞬间变成灰色，以上代码属于同一次宏任务，所以全部执行完才触发页面渲染，渲染时GUI线程会将所有UI改动优化合并，所以视觉效果上，只会看到页面变成灰色。
+<br><br> <strong>第二个例子</strong></p> <div class="language-javascript extra-class"><pre class="language-javascript"><code>document<span class="token punctuation">.</span> body<span class="token punctuation">.</span> style <span class="token operator">=</span> <span class="token string">'background:blue'</span><span class="token punctuation">;</span> 
+<span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+
+    document<span class="token punctuation">.</span>body<span class="token punctuation">.</span>style <span class="token operator">=</span> <span class="token string">'background:black'</span>
+
+<span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span>
+</code></pre></div><p>执行一下，再看效果：</p> <p><img src="https://user-gold-cdn.xitu.io/2019/8/20/16caca3ed44e6b16?imageslim" alt="">
+我会看到，页面先显示成蓝色背景，然后瞬间变成了黑色背景，这是因为以上代码属于两次宏任务，第一次宏任务执行的代码是将背景变成蓝色，然后触发渲染，将页面变成蓝色，再触发第二次宏任务将背景变成黑色。</p> <h2 id="什么是微任务"><a href="#什么是微任务" class="header-anchor">#</a> 什么是微任务</h2> <p>我们已经知道宏任务结束后，会执行渲染，然后执行下一个宏任务， 而微任务可以理解成在当前宏任务执行后立即执行的任务。</p> <p>也就是说，当宏任务执行完，会在渲染前，将执行期间所产生的所有微任务都执行完。</p> <p>Promise，process. nextTick等，属于微任务。</p> <p><strong>第一个例子</strong></p> <div class="language-javascript extra-class"><pre class="language-javascript"><code>document<span class="token punctuation">.</span> body<span class="token punctuation">.</span> style <span class="token operator">=</span> <span class="token string">'background:blue'</span>
+console<span class="token punctuation">.</span> <span class="token function">log</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+Promise<span class="token punctuation">.</span> <span class="token function">resolve</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span> <span class="token function">then</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span> <span class="token function">log</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+
+    document<span class="token punctuation">.</span>body<span class="token punctuation">.</span>style <span class="token operator">=</span> <span class="token string">'background:black'</span>
+
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+console<span class="token punctuation">.</span> <span class="token function">log</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+</code></pre></div><p>执行一下，再看效果：</p> <p><img src="https://user-gold-cdn.xitu.io/2019/8/20/16cad85d2378ccb5?imageslim" alt="">
+控制台输出 1 3 2 , 是因为 promise 对象的 then 方法的回调函数是异步执行，所以 2 最后输出</p> <p>页面的背景色直接变成黑色，没有经过蓝色的阶段，是因为，我们在宏任务中将背景设置为蓝色，但在进行渲染前执行了微任务， 在微任务中将背景变成了黑色，然后才执行的渲染</p> <p><strong>第二个例子</strong></p> <div class="language-javascript extra-class"><pre class="language-javascript"><code><span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+    Promise<span class="token punctuation">.</span><span class="token function">resolve</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token parameter">data</span> <span class="token operator">=&gt;</span> console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span>
+
+<span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span>
+
+<span class="token comment">// print : 1 3 2</span>
+</code></pre></div><p>上面代码共包含两个 setTimeout ，也就是说除主代码块外，共有两个宏任务，
+其中第一个宏任务执行中，输出 1 ，并且创建了微任务队列，所以在下一个宏任务队列执行前，
+先执行微任务，在微任务执行中，输出 3 ，微任务执行后，执行下一次宏任务，执行中输出 2</p> <h2 id="总结"><a href="#总结" class="header-anchor">#</a> 总结</h2> <ul><li>执行一个宏任务（栈中没有就从事件队列中获取）</li> <li>执行过程中如果遇到微任务，就将它添加到微任务的任务队列中</li> <li>宏任务执行完毕后，立即执行当前微任务队列中的所有微任务（依次执行</li></ul> <p>当前宏任务执行完毕，开始检查渲染，然后GUI线程接管渲染）</p> <ul><li>渲染完毕后，JS线程继续接管，开始下一个宏任务（从事件队列中获取）</li></ul> <p><img src="https://user-gold-cdn.xitu.io/2019/10/25/16e0084a825be830?w=389&amp;h=601&amp;f=png&amp;s=48214" alt=""></p> <h2 id="参考"><a href="#参考" class="header-anchor">#</a> 参考</h2> <ul><li><a href="https://www.jianshu.com/p/1e455a9226ce" target="_blank" rel="noopener noreferrer">浏览器都包含哪些进程<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li> <li><a href="http://www.ruanyifeng.com/blog/2013/04/processes_and_threads.html" target="_blank" rel="noopener noreferrer">进程与线程的一个简单解释<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li> <li><a href="https://www.cnblogs.com/lhb25/p/how-browsers-work.html" target="_blank" rel="noopener noreferrer">深入解析浏览器的幕后工作原理<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li> <li><a href="https://segmentfault.com/a/1190000008015671" target="_blank" rel="noopener noreferrer">一篇文章说清浏览器解析和CSS（GPU）动画优化<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li></ul> <h2 id="写在最后"><a href="#写在最后" class="header-anchor">#</a> 写在最后</h2> <p>看到这里，不知道对JS的运行机制是不是更加理解了，从头到尾梳理，而不是就某一个碎片化知识应该是会更清晰的吧？</p> <p>同时，也应该注意到了JS根本就没有想象的那么简单，前端的知识也是无穷无尽，层出不穷的概念、N多易忘的知识点、各式各样的框架、 底层原理方面也是可以无限的往下深挖，然后你就会发现，你知道的太少了。。。</p> <p>最后，喜欢的话，就请给个赞吧！</p></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/Interview/js/003：发布订阅和观察者模式.html" class="prev">
+        003：发布订阅和观察者模式
+      </a></span> <span class="next"><a href="/Interview/js/005：检测四种方案的异同.html">
+        005：检测四种方案的异同
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.06b24de5.js" defer></script><script src="/assets/js/2.a05443f6.js" defer></script><script src="/assets/js/20.e9f183ae.js" defer></script>
+  </body>
+</html>

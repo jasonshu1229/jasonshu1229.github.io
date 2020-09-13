@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>垃圾收集的背景 | 前端时光屋</title>
+    <meta name="description" content="梁书豪的博客">
+    <meta name="generator" content="VuePress 1.3.0">
+    <link rel="icon" href="/assets/img/head.jpg">
+    
+    <link rel="preload" href="/assets/css/0.styles.83ce72a3.css" as="style"><link rel="preload" href="/assets/js/app.06b24de5.js" as="script"><link rel="preload" href="/assets/js/2.a05443f6.js" as="script"><link rel="preload" href="/assets/js/50.f945ce05.js" as="script"><link rel="prefetch" href="/assets/js/10.a5eaa95a.js"><link rel="prefetch" href="/assets/js/11.06e35382.js"><link rel="prefetch" href="/assets/js/12.140f4db6.js"><link rel="prefetch" href="/assets/js/13.f2fcf962.js"><link rel="prefetch" href="/assets/js/14.e39a2df6.js"><link rel="prefetch" href="/assets/js/15.b07ecf86.js"><link rel="prefetch" href="/assets/js/16.949e4dac.js"><link rel="prefetch" href="/assets/js/17.6a721f97.js"><link rel="prefetch" href="/assets/js/18.1b363edf.js"><link rel="prefetch" href="/assets/js/19.900530d5.js"><link rel="prefetch" href="/assets/js/20.e9f183ae.js"><link rel="prefetch" href="/assets/js/21.6c08f73f.js"><link rel="prefetch" href="/assets/js/22.c37ad609.js"><link rel="prefetch" href="/assets/js/23.759a99ff.js"><link rel="prefetch" href="/assets/js/24.c8f3fa94.js"><link rel="prefetch" href="/assets/js/25.b58c3ab8.js"><link rel="prefetch" href="/assets/js/26.ba5e0c3b.js"><link rel="prefetch" href="/assets/js/27.ad23a71d.js"><link rel="prefetch" href="/assets/js/28.a74c53ca.js"><link rel="prefetch" href="/assets/js/29.30ef0dde.js"><link rel="prefetch" href="/assets/js/3.a21791ca.js"><link rel="prefetch" href="/assets/js/30.1e9ebdb5.js"><link rel="prefetch" href="/assets/js/31.30b7a1e3.js"><link rel="prefetch" href="/assets/js/32.9f1ded02.js"><link rel="prefetch" href="/assets/js/33.61ac7552.js"><link rel="prefetch" href="/assets/js/34.f040c739.js"><link rel="prefetch" href="/assets/js/35.2c5d08d5.js"><link rel="prefetch" href="/assets/js/36.257c41df.js"><link rel="prefetch" href="/assets/js/37.40a1bbc2.js"><link rel="prefetch" href="/assets/js/38.5415ab64.js"><link rel="prefetch" href="/assets/js/39.90b605f0.js"><link rel="prefetch" href="/assets/js/4.21591d40.js"><link rel="prefetch" href="/assets/js/40.5e9ae863.js"><link rel="prefetch" href="/assets/js/41.884155d7.js"><link rel="prefetch" href="/assets/js/42.1ec6dd60.js"><link rel="prefetch" href="/assets/js/43.47cf7283.js"><link rel="prefetch" href="/assets/js/44.7af49fad.js"><link rel="prefetch" href="/assets/js/45.6088e1a9.js"><link rel="prefetch" href="/assets/js/46.fd004b63.js"><link rel="prefetch" href="/assets/js/47.044fc351.js"><link rel="prefetch" href="/assets/js/48.55a5f3fb.js"><link rel="prefetch" href="/assets/js/49.e103d7ad.js"><link rel="prefetch" href="/assets/js/5.db726197.js"><link rel="prefetch" href="/assets/js/51.316d410a.js"><link rel="prefetch" href="/assets/js/52.92a10b4a.js"><link rel="prefetch" href="/assets/js/53.e7534ba4.js"><link rel="prefetch" href="/assets/js/54.6b19fef9.js"><link rel="prefetch" href="/assets/js/55.e3fc3b29.js"><link rel="prefetch" href="/assets/js/56.0e152b3e.js"><link rel="prefetch" href="/assets/js/57.13187b13.js"><link rel="prefetch" href="/assets/js/58.d9bda000.js"><link rel="prefetch" href="/assets/js/59.da580bc1.js"><link rel="prefetch" href="/assets/js/6.ecb72c20.js"><link rel="prefetch" href="/assets/js/60.285d6cbd.js"><link rel="prefetch" href="/assets/js/61.2cdcce13.js"><link rel="prefetch" href="/assets/js/62.cf643bd2.js"><link rel="prefetch" href="/assets/js/63.137e165f.js"><link rel="prefetch" href="/assets/js/64.ce851e8d.js"><link rel="prefetch" href="/assets/js/65.8e7d5299.js"><link rel="prefetch" href="/assets/js/66.4369c90e.js"><link rel="prefetch" href="/assets/js/67.c769b698.js"><link rel="prefetch" href="/assets/js/68.bf74184c.js"><link rel="prefetch" href="/assets/js/69.17c602b3.js"><link rel="prefetch" href="/assets/js/7.6cbb1600.js"><link rel="prefetch" href="/assets/js/70.55df3357.js"><link rel="prefetch" href="/assets/js/71.4fccac4a.js"><link rel="prefetch" href="/assets/js/72.d4eeaf2a.js"><link rel="prefetch" href="/assets/js/73.30f9528a.js"><link rel="prefetch" href="/assets/js/74.4e91b153.js"><link rel="prefetch" href="/assets/js/75.cbd8b825.js"><link rel="prefetch" href="/assets/js/76.72f7b4b9.js"><link rel="prefetch" href="/assets/js/77.a30e1989.js"><link rel="prefetch" href="/assets/js/78.3c4b8b32.js"><link rel="prefetch" href="/assets/js/79.0897d95d.js"><link rel="prefetch" href="/assets/js/8.36911a7c.js"><link rel="prefetch" href="/assets/js/80.43c8044b.js"><link rel="prefetch" href="/assets/js/81.89c13b3c.js"><link rel="prefetch" href="/assets/js/82.df5cf081.js"><link rel="prefetch" href="/assets/js/83.885deed2.js"><link rel="prefetch" href="/assets/js/84.4ed1e2fa.js"><link rel="prefetch" href="/assets/js/85.8bade5eb.js"><link rel="prefetch" href="/assets/js/86.d39c8dda.js"><link rel="prefetch" href="/assets/js/87.15d43505.js"><link rel="prefetch" href="/assets/js/88.ee14fb59.js"><link rel="prefetch" href="/assets/js/89.c5ea7888.js"><link rel="prefetch" href="/assets/js/9.6d6cea10.js"><link rel="prefetch" href="/assets/js/90.2e83c22b.js"><link rel="prefetch" href="/assets/js/91.972a9ec4.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.83ce72a3.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">前端时光屋</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  主页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="JavaScript" class="dropdown-title"><span class="title">JavaScript</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/JavaScript/basics/" class="nav-link router-link-active">
+  基础
+</a></li><li class="dropdown-item"><!----> <a href="/JavaScript/advance/" class="nav-link">
+  进阶
+</a></li></ul></div></div><div class="nav-item"><a href="/Vue/base/" class="nav-link">
+  Vue
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="React" class="dropdown-title"><span class="title">React</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/React/basics/" class="nav-link">
+  用法
+</a></li><li class="dropdown-item"><!----> <a href="/React/advance/" class="nav-link">
+  原理
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Node" class="dropdown-title"><span class="title">Node</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/Node/basics/" class="nav-link">
+  用法
+</a></li><li class="dropdown-item"><!----> <a href="/Node/advance/" class="nav-link">
+  原理
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Webpack" class="dropdown-title"><span class="title">Webpack</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/Webpack/basics/" class="nav-link">
+  用法
+</a></li><li class="dropdown-item"><!----> <a href="/Webpack/advance/" class="nav-link">
+  原理
+</a></li></ul></div></div><div class="nav-item"><a href="/Performance/" class="nav-link">
+  性能相关
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="面试相关" class="dropdown-title"><span class="title">面试相关</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/Interview/js/" class="nav-link">
+  js
+</a></li><li class="dropdown-item"><!----> <a href="/Interview/vue/" class="nav-link">
+  vue
+</a></li><li class="dropdown-item"><!----> <a href="/Interview/react/" class="nav-link">
+  react
+</a></li><li class="dropdown-item"><!----> <a href="/Interview/webpack/" class="nav-link">
+  webpack
+</a></li><li class="dropdown-item"><!----> <a href="/Interview/http/" class="nav-link">
+  http
+</a></li></ul></div></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  主页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="JavaScript" class="dropdown-title"><span class="title">JavaScript</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/JavaScript/basics/" class="nav-link router-link-active">
+  基础
+</a></li><li class="dropdown-item"><!----> <a href="/JavaScript/advance/" class="nav-link">
+  进阶
+</a></li></ul></div></div><div class="nav-item"><a href="/Vue/base/" class="nav-link">
+  Vue
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="React" class="dropdown-title"><span class="title">React</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/React/basics/" class="nav-link">
+  用法
+</a></li><li class="dropdown-item"><!----> <a href="/React/advance/" class="nav-link">
+  原理
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Node" class="dropdown-title"><span class="title">Node</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/Node/basics/" class="nav-link">
+  用法
+</a></li><li class="dropdown-item"><!----> <a href="/Node/advance/" class="nav-link">
+  原理
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Webpack" class="dropdown-title"><span class="title">Webpack</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/Webpack/basics/" class="nav-link">
+  用法
+</a></li><li class="dropdown-item"><!----> <a href="/Webpack/advance/" class="nav-link">
+  原理
+</a></li></ul></div></div><div class="nav-item"><a href="/Performance/" class="nav-link">
+  性能相关
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="面试相关" class="dropdown-title"><span class="title">面试相关</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/Interview/js/" class="nav-link">
+  js
+</a></li><li class="dropdown-item"><!----> <a href="/Interview/vue/" class="nav-link">
+  vue
+</a></li><li class="dropdown-item"><!----> <a href="/Interview/react/" class="nav-link">
+  react
+</a></li><li class="dropdown-item"><!----> <a href="/Interview/webpack/" class="nav-link">
+  webpack
+</a></li><li class="dropdown-item"><!----> <a href="/Interview/http/" class="nav-link">
+  http
+</a></li></ul></div></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>堆栈内存及闭包作用域</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/JavaScript/basics/000：浏览器进程与宏微任务.html" class="sidebar-link">000：浏览器进程与宏微任务</a></li><li><a href="/JavaScript/basics/001：数据类型转换法则.html" class="sidebar-link">001：数据类型转换法则</a></li><li><a href="/JavaScript/basics/002：深度剖析parseInt的处理规则.html" class="sidebar-link">002：深度剖析parseInt的处理规则</a></li><li><a href="/JavaScript/basics/003：浏览器底层机制：EC、STACK、VO、AO、GO.html" class="sidebar-link">003：浏览器底层机制：EC、STACK、VO、AO、GO</a></li><li><a href="/JavaScript/basics/004：函数创建和执行的底层机制.html" class="sidebar-link">004：函数创建和执行的底层机制</a></li><li><a href="/JavaScript/basics/005：闭包作用域及其经典面试题.html" class="sidebar-link">005：闭包作用域及其经典面试题</a></li><li><a href="/JavaScript/basics/006：闭包的应用.html" class="sidebar-link">006：闭包的应用</a></li><li><a href="/JavaScript/basics/007：垃圾收集-机制.html" class="active sidebar-link">007：垃圾收集-机制</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/JavaScript/basics/007：垃圾收集-机制.html#垃圾收集的背景" class="sidebar-link">垃圾收集的背景</a></li><li class="sidebar-sub-header"><a href="/JavaScript/basics/007：垃圾收集-机制.html#策略①-——-标记清除" class="sidebar-link">策略① —— 标记清除</a></li><li class="sidebar-sub-header"><a href="/JavaScript/basics/007：垃圾收集-机制.html#策略②-——-引用计数" class="sidebar-link">策略② —— 引用计数</a></li><li class="sidebar-sub-header"><a href="/JavaScript/basics/007：垃圾收集-机制.html#管理内存" class="sidebar-link">管理内存</a></li><li class="sidebar-sub-header"><a href="/JavaScript/basics/007：垃圾收集-机制.html#总结" class="sidebar-link">总结</a></li></ul></li><li><a href="/JavaScript/basics/008：尾递归调用和优化.html" class="sidebar-link">008：尾递归调用和优化</a></li></ul></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>浏览器的底层渲染机制及优化</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>面向对象（OOP）和this处理</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>ES6/ES7的核心知识</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>AJAX/HTTP前后端数据交互</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/JavaScript/basics/000：浏览器进程与宏微任务.html" class="sidebar-link">000：浏览器进程与宏微任务</a></li><li><a href="/JavaScript/basics/001：AJAX.html" class="sidebar-link">001：AJAX</a></li></ul></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>TypeScript教程</span> <span class="arrow right"></span></p> <!----></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h2 id="垃圾收集的背景"><a href="#垃圾收集的背景" class="header-anchor">#</a> 垃圾收集的背景</h2> <p>    Javascript具有<strong>自动垃圾收集机制</strong>，也就是说，执行完井会<strong>自己</strong>负责管理代码执行过程中使用的内存；而早C和C++之类的语言中，垃圾回收机制是需要开发人员手工跟踪内存的使用情况，这也是，造成内存泄漏的一个根源。
+<br><br>
+    垃圾收集器必须跟踪那个变量有用哪个变量没用，对于不再有用的变量打上标记，以备将来收回其占用的内存。用于标识无用变量的策略可能会因实现而异，但具体到浏览器中的实现，则通常有以下两个策略。</p> <h2 id="策略①-——-标记清除"><a href="#策略①-——-标记清除" class="header-anchor">#</a> 策略① —— 标记清除</h2> <p>    最常用的垃圾收集方式是<strong>标记清除</strong>，当变量进入环境时，将这个变量标记为<strong>进入环境</strong>，当变量被用完，离开环境时，标记为<strong>离开环境</strong>。
+<br><br>
+    垃圾收集器在运行的时候会给存储在内存中的<strong>所有变量</strong>都加上<strong>标记</strong>。然后它会去掉环境中的变量以及被环境中的变量<strong>引用的变量的标记</strong>。而在此之后再被加上标记的变量将被视为<strong>准备删除</strong>的变量，原因是环境中的变量已经无法访问到这些变量了。最后，垃圾收集器完成内存清除工作，销毁哪些带标记的值，并回收它们所占用的<strong>内存空间</strong>。</p> <h2 id="策略②-——-引用计数"><a href="#策略②-——-引用计数" class="header-anchor">#</a> 策略② —— 引用计数</h2> <p>    另一种不太常见的垃圾收集策略叫<b>引用计数</b>。引用计数的含义是跟踪记录每个值被引用的次数，当声明了一个变量并被赋值了引用类型的值，则这个值的引用次数就是1，与此同时如果再被赋予变量的话，则引用次数加1。相反如果包含对这个<strong>值</strong>的引用的<strong>变量</strong>，又取得了另外一个新<strong>值</strong>，则这个值得引用次数减1，当减到0的时候，就会释放这个值所占用的<strong>内存</strong>。</p> <p><b>弊端：</b>循环引用问题和IE9以前的浏览器都会到这引用计数的算法有问题。</p> <h2 id="管理内存"><a href="#管理内存" class="header-anchor">#</a> 管理内存</h2> <p>    最主要的一个问题，就是分配给<strong>Web浏览器</strong>的<strong>可用内存数量</strong>通常要比分配给<strong>桌面应用程序</strong>的<strong>少</strong>。这样做的目的主要是由于安全方面的考虑。目的是防止JS的网页<strong>耗尽</strong>全部系统内存而导致系统崩溃。内存限制问题不仅会影响给变量分配内存，还会影响<strong>调用栈</strong>以及在一个<strong>线程</strong>中能够<strong>同时</strong>执行的<strong>语句数量</strong>.
+一般通过将其值设置为null来释放其引用——<b>解除引用</b>。<br><br>
+    不过，解除一个值得引用并不意味着自动<strong>回收该值</strong>所占用的内存，解除引用的真正<strong>作用</strong>是让<strong>值脱离执行环境</strong>，以便垃圾收集器下次运行将其回收。</p> <h2 id="总结"><a href="#总结" class="header-anchor">#</a> 总结</h2> <ul><li>离开作用域的值将被自动标记为可以回收，因为将在垃圾收集器件被删除。</li> <li><strong>标记清除</strong>是目前主流的垃圾收集算法，这种算法的思想是<strong>给当前不使用的值标记，然后再回收其内存</strong>。</li> <li>另一种垃圾手机算法是<strong>引用计数</strong>，这种算法的思想是<strong>跟踪记录所有值被引用的次数</strong>，JavaScript引擎目前都不再使用这种算法；但在IE中访问非原生JavaScript对象（DOM元素）时，这种算法仍然可能会导致问题。</li> <li>当代码中存在循环引用现象时，&quot;引用计数&quot;算法就会导致问题。</li></ul> <p><br><br>
+-- 本篇博客来自于《JavaScript》高级程序设计（第三版）4.3章节</p></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/JavaScript/basics/006：闭包的应用.html" class="prev">
+        006：闭包的应用
+      </a></span> <span class="next"><a href="/JavaScript/basics/008：尾递归调用和优化.html">
+        008：尾递归调用和优化
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.06b24de5.js" defer></script><script src="/assets/js/2.a05443f6.js" defer></script><script src="/assets/js/50.f945ce05.js" defer></script>
+  </body>
+</html>
